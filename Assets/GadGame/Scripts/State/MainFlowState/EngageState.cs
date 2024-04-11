@@ -16,6 +16,16 @@ namespace GadGame.State
 
         public override void Update()
         {
+            if (!Receiver.Instance.DataReceived.PassBy)
+            {
+                Runner.SetState(typeof(IdleState));
+                return;
+            }
+            if (!Receiver.Instance.DataReceived.Engage)
+            {
+                Runner.SetState(typeof(ViewedState));
+                return;
+            }
             if (!Receiver.Instance.DataReceived.Ready) _timer = 0;
             _timer += Time.deltaTime;
             if (_timer >= 5)

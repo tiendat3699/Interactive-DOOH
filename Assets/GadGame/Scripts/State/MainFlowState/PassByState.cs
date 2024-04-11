@@ -13,7 +13,12 @@ namespace GadGame.State
         
         public override void Update()
         {
-            if (Receiver.Instance.DataReceived.Viewed)
+            if (!Receiver.Instance.DataReceived.PassBy)
+            {
+                Runner.SetState(typeof(IdleState));
+                return;
+            }
+            if (Receiver.Instance.DataReceived.OnVision)
             {
                 Runner.SetState(typeof(ViewedState));
             }

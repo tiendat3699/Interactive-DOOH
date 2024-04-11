@@ -1,4 +1,6 @@
 
+using UnityEngine.Serialization;
+
 namespace GadGame.Network
 {
     public enum Genders
@@ -11,7 +13,7 @@ namespace GadGame.Network
     public struct ReceiverData
     {
         public bool PassBy;
-        public bool Viewed;
+        public bool OnVision;
         public bool Engage;
         public bool Ready;
         public Genders Gender;
