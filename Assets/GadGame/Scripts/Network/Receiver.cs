@@ -14,13 +14,13 @@ namespace GadGame.Network
         [SerializeField] private string _ip = "";
         [SerializeField] private int _port = 3000;
         [SerializeField] private ReceiverData _dataReceived;
-        
+
         private bool _receiving = true;
         public ReceiverData DataReceived => _dataReceived;
 
         private Thread _receiveThread;
         private TcpListener _listener;
-        
+
 
         private void Start()
         {
@@ -42,20 +42,23 @@ namespace GadGame.Network
                 Debug.LogError("Error starting listener: " + e.Message);
             }
         }
-        
 
         private void GetReceiveData()
         {
             while (_receiving)
             {
                 try
-                {   
+                {
                     var client = _listener.AcceptTcpClient();
                     var stream = client.GetStream();
                     var buffer = new byte[1024];
                     var bytesRead = stream.Read(buffer, 0, buffer.Length);
                     var jsonData = Encoding.ASCII.GetString(buffer, 0, bytesRead);
-                    _dataReceived = JsonConvert.DeserializeObject<ReceiverData>(jsonData);
+                    _dataReceived = JsonConvert.DeserializeObject<ReceiverData>(jsonData, new JsonSerializerSettings
+                    {
+                        NullValueHandling = NullValueHandling.Ignore,
+                        MissingMemberHandling = MissingMemberHandling.Ignore
+                    });
                 }
                 catch (Exception e)
                 {
@@ -64,7 +67,7 @@ namespace GadGame.Network
                 }
             }
         }
-        
+
         void OnDestroy()
         {
             _receiving = false;
