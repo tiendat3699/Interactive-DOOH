@@ -11,7 +11,6 @@ namespace GadGame.Network
 {
     public class Receiver : PersistentSingleton<Receiver>
     {
-        [SerializeField] private string _ip = "";
         [SerializeField] private int _port = 3000;
         [SerializeField] private ReceiverData _dataReceived;
 
