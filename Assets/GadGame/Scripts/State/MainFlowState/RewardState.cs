@@ -1,24 +1,20 @@
-using UnityEngine;
 using GadGame.Manager;
 
-namespace GadGame.State
+namespace GadGame.State.MainFlowState
 {
     public class RewardState : State<MainFlow>
     {
-        private float _timer;
-        
+
         public override void Enter()
         {
-            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.RewardScene.ScenePath);   
-            _timer = 0;
+            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.RewardScene.ScenePath);
         }
         
-        public override void Update()
+        public override void Update(float time)
         {
-            _timer += Time.deltaTime;
-            if (_timer >= 10)
+            if (time >= 5)
             {
-                Runner.SetState(typeof(CTAState));
+                Runner.SetState<CTAState>();
             }
         }
 

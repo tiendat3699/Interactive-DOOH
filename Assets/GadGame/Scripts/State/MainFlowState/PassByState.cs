@@ -1,7 +1,7 @@
 using GadGame.Manager;
 using GadGame.Network;
 
-namespace GadGame.State
+namespace GadGame.State.MainFlowState
 {
     public class PassByState : State<MainFlow>
     {
@@ -11,16 +11,17 @@ namespace GadGame.State
             LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.PassByScene.ScenePath);
         }
         
-        public override void Update()
+        public override void Update(float time)
         {
-            if (!Receiver.Instance.DataReceived.PassBy)
+            if (time < 2f) return;
+            if (!DataReceiver.Instance.DataReceived.PassBy)
             {
-                Runner.SetState(typeof(IdleState));
+                Runner.SetState<IdleState>();
                 return;
             }
-            if (Receiver.Instance.DataReceived.OnVision)
+            if (DataReceiver.Instance.DataReceived.OnVision)
             {
-                Runner.SetState(typeof(ViewedState));
+                Runner.SetState<ViewedState>();
             }
         }
 

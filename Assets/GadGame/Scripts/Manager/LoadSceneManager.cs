@@ -22,6 +22,7 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(sceneIndex);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
+            await UniTask.Delay(200);
             asyncOperation.allowSceneActivation = true;
             await _transitionCanvasGroup.DOFade(0, transitionDuration);
         }
@@ -32,6 +33,7 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(sceneIndex);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
+            await UniTask.Delay(200);
             asyncOperation.allowSceneActivation = true;
             await _transitionCanvasGroup.DOFade(0, transitionDuration/2);
         }
@@ -42,6 +44,7 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(scenePath);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
+            await UniTask.Delay(200);
             asyncOperation.allowSceneActivation = true;
             await _transitionCanvasGroup.DOFade(0, transitionDuration/2);
         }
@@ -52,6 +55,7 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(scenePath);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
+            await UniTask.Delay(200);
             asyncOperation.allowSceneActivation = true;
             await _transitionCanvasGroup.DOFade(0, transitionDuration/2);
         }

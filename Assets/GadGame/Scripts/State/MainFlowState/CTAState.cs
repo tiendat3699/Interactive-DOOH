@@ -1,30 +1,36 @@
-using UnityEngine;
 using GadGame.Manager;
+using GadGame.Network;
+using UnityEngine;
 
-namespace GadGame.State
+namespace GadGame.State.MainFlowState
 {
     public class CTAState : State<MainFlow>
     {
-        private float _timer;
-
+        private float _noPassByTimer;
         public override void Enter()
         {
             LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTAScene.ScenePath);
-            _timer = 0;
         }
 
-        public override void Update()
+        public override void Update(float time)
         {
-            _timer += Time.deltaTime;
-            if (_timer >= 10)
+            if (!DataReceiver.Instance.DataReceived.PassBy)
             {
-                Runner.SetState(typeof(IdleState));
-            } 
+                _noPassByTimer += Time.deltaTime;
+                if (_noPassByTimer >= 10)
+                {
+                    Runner.SetState<IdleState>();
+                }
+            }
+            else
+            {
+                _noPassByTimer = 0;
+            }
         }
 
         public override void Exit()
         {
-            
+            _noPassByTimer = 0;
         }
     }
 }

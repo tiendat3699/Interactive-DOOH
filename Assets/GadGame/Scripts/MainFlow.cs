@@ -1,7 +1,8 @@
 using GadGame.SO;
 using GadGame.State;
+using GadGame.State.MainFlowState;
 
-namespace GadGame.Manager
+namespace GadGame
 {
     public class MainFlow : StateRunner<MainFlow>
     {
@@ -15,7 +16,7 @@ namespace GadGame.Manager
 
         private void Start()
         {
-            SetState(typeof(IdleState));
+            SetState<IdleState>();
         }
     }
 }

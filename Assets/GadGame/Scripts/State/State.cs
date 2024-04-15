@@ -12,7 +12,7 @@ namespace GadGame.State
         }
 
         public abstract void Enter();
-        public abstract void Update();
+        public abstract void Update(float time);
         public abstract void Exit();
     }
 }

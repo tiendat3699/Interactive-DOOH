@@ -9,7 +9,7 @@ using UnityEngine;
 
 namespace GadGame.Network
 {
-    public class Receiver : PersistentSingleton<Receiver>
+    public class DataReceiver : PersistentSingleton<DataReceiver>
     {
         [SerializeField] private int _port = 3000;
         [SerializeField] private ReceiverData _dataReceived;

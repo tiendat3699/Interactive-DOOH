@@ -10,7 +10,7 @@ namespace GadGame.State
 {
     public class StateRunner<T> : MonoBehaviour where T : MonoBehaviour
     {
-        private State<T> _activeState;
+        protected State<T> ActiveState;
         
 #if UNITY_EDITOR
         [ValueDropdown("AllStates")]
@@ -18,6 +18,7 @@ namespace GadGame.State
         [SerializeField]
         private List<string> _availableStates;
         private List<State<T>> _states;
+        private float _timer;
         
 #if UNITY_EDITOR
         public IEnumerable AllStates
@@ -46,24 +47,28 @@ namespace GadGame.State
             }
         }
 
-        private void Update()
+        protected virtual void Update()
         {
-            _activeState.Update();
+            if (ActiveState != null)
+            {
+                _timer += Time.deltaTime;
+                ActiveState.Update(_timer);
+            }
         }
 
-        public void SetState(Type stateType)
+        public void SetState<TSt>() where TSt : State<T>
         {
-            if (_activeState != null)
+            if (ActiveState != null)
             {
-                if(_activeState.GetType() == stateType) return;
-                _activeState.Exit();
+                if(ActiveState is TSt) return;
+                ActiveState.Exit();
             }
 
-            var newState = _states.FirstOrDefault(s => s.GetType() == stateType);
+            var newState = _states.FirstOrDefault(s => s is TSt);
             if(newState == null) return;
-            _activeState = newState;
-            _activeState.Enter();
-            Debug.Log(stateType.ToString());
+            ActiveState = newState;
+            ActiveState.Enter();
+            _timer = 0;
         }
     }
 }
