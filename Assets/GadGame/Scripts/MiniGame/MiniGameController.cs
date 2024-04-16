@@ -74,18 +74,28 @@ namespace GadGame.MiniGame
         {
             //640x480;
             var inputData = DataReceiver.Instance.DataReceived.PosPoint;
-            var inputNormalize = new Vector2(inputData.x / 640, -inputData.y / 480).normalized;
-            if (inputNormalize != Vector2.zero)
+            var inputNormalize = new Vector2(inputData.x / 640, inputData.y / 480);
+            var screenPoint = new Vector2
             {
-                var dirMove = _camera.ScreenToWorldPoint(inputNormalize).normalized;
+                x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x),
+                y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y)
+            };
+            if (screenPoint != Vector2.zero)
+            {
+                var worldPoint = _camera.ScreenToWorldPoint(screenPoint);
                 var currentPosition = _basket.position;
-                var pos = currentPosition + (Vector3)dirMove * (_speed * Time.deltaTime);
-                pos.x = Mathf.Clamp(pos.x, -2.25f, 2.25f);
-                pos.y = currentPosition.y;
-                pos.z = 0;
-                _basket.position = Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
+                var dirMove = worldPoint - new Vector3(0, 0);
+                dirMove.y = 0;
+                dirMove.z = 0;
+                dirMove.Normalize();
+                var targetPos = currentPosition + dirMove * _speed;
+                targetPos.x *= -1;
+                _basket.Translate(dirMove * (_speed * Time.deltaTime));
+                currentPosition = _basket.position;
+                currentPosition.x = Mathf.Clamp(currentPosition.x, -2.25f, 2.25f);
+                _basket.position = currentPosition;
+                // _basket.position = Vector3.Lerp(currentPosition, targetPos, _lerp * Time.deltaTime);
             }
-
         }
 
         public void SetTextTime(float time)
