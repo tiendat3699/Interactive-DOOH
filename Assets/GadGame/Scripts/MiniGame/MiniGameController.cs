@@ -91,7 +91,19 @@ namespace GadGame.MiniGame
                 currentPosition.x = Mathf.Clamp(currentPosition.x, -2.25f, 2.25f);
                 _basket.position = currentPosition;
             }
+        }
 
+        public void ReleaseAllItem()
+        {
+            foreach (var pool in _bombPools)
+            {
+                pool.Clear();
+            }
+            
+            foreach (var pool in _itemPools)
+            {
+                pool.Clear();
+            }
         }
 
         public void SetTextTime(float time)

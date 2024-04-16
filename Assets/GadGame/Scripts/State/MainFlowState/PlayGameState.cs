@@ -12,6 +12,7 @@ namespace GadGame.State.MainFlowState
         
         public override async void Enter()
         {
+            DataReceiver.Instance.SendDataToPython("{playingGame: true}");
             await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameScene.ScenePath);
             _gameManager = GameManager.Instance;
             _gameManager.OnEnd += OnEndGame;
@@ -43,7 +44,7 @@ namespace GadGame.State.MainFlowState
 
         public override void Exit()
         {
-            
+            DataReceiver.Instance.SendDataToPython("{playingGame: false}");
         }
 
         private void OnEndGame()

@@ -67,6 +67,28 @@ namespace GadGame.Network
             }
         }
 
+        public void SendDataToPython(string data)
+        {
+            try
+            {
+                string jsonData = JsonConvert.SerializeObject(data);
+                IPEndPoint endPoint = new IPEndPoint(IPAddress.Any, _port);
+
+                Socket socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+                socket.Connect(endPoint);
+
+                    // Convert string data to bytes
+                    byte[] byteData = Encoding.UTF8.GetBytes(jsonData);
+
+                    // Send data to Python
+                    socket.Send(byteData);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError("Error sending data to Python: " + e.Message);
+            }
+        }
+
         void OnDestroy()
         {
             _receiving = false;
