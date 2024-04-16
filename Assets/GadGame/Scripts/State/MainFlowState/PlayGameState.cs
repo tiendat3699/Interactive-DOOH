@@ -12,7 +12,6 @@ namespace GadGame.State.MainFlowState
         
         public override async void Enter()
         {
-            UdpSocket.Instance.SendDataToPython("{playingGame: true}");
             await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameScene.ScenePath);
             _gameManager = GameManager.Instance;
             _gameManager.OnEnd += OnEndGame;
@@ -20,6 +19,7 @@ namespace GadGame.State.MainFlowState
         
         public override void Update(float time)
         {
+            UdpSocket.Instance.SendDataToPython("1");
             switch (_warned)
             {
                 case false when !UdpSocket.Instance.DataReceived.Engage:
@@ -44,7 +44,7 @@ namespace GadGame.State.MainFlowState
 
         public override void Exit()
         {
-            UdpSocket.Instance.SendDataToPython("{playingGame: false}");
+            
         }
 
         private void OnEndGame()

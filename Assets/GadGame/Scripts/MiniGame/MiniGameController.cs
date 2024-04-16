@@ -95,15 +95,15 @@ namespace GadGame.MiniGame
 
         public void ReleaseAllItem()
         {
-            foreach (var pool in _bombPools)
-            {
-                pool.Clear();
-            }
-            
-            foreach (var pool in _itemPools)
-            {
-                pool.Clear();
-            }
+            // foreach (var pool in _bombPools)
+            // {
+            //     pool.Clear();
+            // }
+            //
+            // foreach (var pool in _itemPools)
+            // {
+            //     pool.Clear();
+            // }
         }
 
         public void SetTextTime(float time)
