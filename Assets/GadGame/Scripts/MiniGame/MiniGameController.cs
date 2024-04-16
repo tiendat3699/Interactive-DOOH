@@ -31,6 +31,7 @@ namespace GadGame.MiniGame
         [SerializeField] private Pool<Bomb>[] _bombPools;
 
         private GameManager _gameManager;
+        private Camera _camera;
         private float _spawnTimer;
 
         private void Start()
@@ -39,6 +40,7 @@ namespace GadGame.MiniGame
             _gameManager.OnPause += Pause;
             _gameManager.OnResume += Resume;
             _gameManager.OnScoreUpdate += OnScoreUpdate;
+            _camera = Camera.main;
             SetState<PlayingGameState>();
             _time.text = GameTime.ToString();
         }
@@ -75,7 +77,7 @@ namespace GadGame.MiniGame
             var inputNormalize = new Vector2(inputData.x / 640, -inputData.y / 480).normalized;
             if (inputNormalize != Vector2.zero)
             {
-                var dirMove = inputNormalize;
+                var dirMove = _camera.ScreenToWorldPoint(inputNormalize).normalized;
                 var currentPosition = _basket.position;
                 var pos = currentPosition + (Vector3)dirMove * (_speed * Time.deltaTime);
                 pos.x = Mathf.Clamp(pos.x, -2.25f, 2.25f);
