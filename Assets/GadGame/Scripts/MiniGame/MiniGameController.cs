@@ -75,13 +75,14 @@ namespace GadGame.MiniGame
             var inputData = DataReceiver.Instance.DataReceived.PosPoint;
             var inputNormalize = new Vector2(inputData.x / 640, inputData.y / 480);
             var input = new Vector2();
-            input.x = -Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
+            input.x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
             input.y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y);
             if (input != Vector2.zero)
             {
                 var mousePos = input;
                 var pos = _camera.ScreenToWorldPoint(mousePos);
                 var currentPosition = _basket.position;
+                pos.x *= -1;
                 pos.y = currentPosition.y;
                 pos.z = 0;
                 _basket.position = Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
