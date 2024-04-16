@@ -1,4 +1,4 @@
-using System;
+using DG.Tweening;
 using GadGame.Manager;
 using Pools.Runtime;
 using UnityEngine;
@@ -15,9 +15,10 @@ namespace GadGame.MiniGame
         public void Init(float gravityScale = 1)
         {
             _rb.gravityScale = gravityScale;
+            transform.DORotate(new Vector3(0, 0, 1),0.1f).SetLoops(-1, LoopType.Incremental);
         }
 
-        private void FixedUpdate()
+        private void LateUpdate()
         {
             if (_inUsed && _rb.position.y <= -10)
             {
