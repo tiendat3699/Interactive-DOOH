@@ -1,3 +1,5 @@
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace GadGame.SO
@@ -12,5 +14,38 @@ namespace GadGame.SO
         public SceneReference GameScene;
         public SceneReference RewardScene;
         public SceneReference CTAScene;
+        
+        
+#if UNITY_EDITOR
+        public static SceneFlowConfig FindSettings()
+        {
+            var guids = AssetDatabase.FindAssets($"t:{nameof(SceneFlowConfig)}");
+            if (guids.Length > 1) Debug.LogWarning("Found multiple settings files, using the first.");
+
+            switch (guids.Length)
+            {
+                case 0:
+                    return null;
+                default:
+                    var path = AssetDatabase.GUIDToAssetPath(guids[0]);
+                    return AssetDatabase.LoadAssetAtPath<SceneFlowConfig>(path);
+            }
+        }
+       
+        public static SceneFlowConfig GetOrCreateSettings()
+        {
+            var settings = FindSettings();
+            if (settings == null)
+            {
+                settings = CreateInstance<SceneFlowConfig>();
+                string path = "Assets/_Game/SO/SceneFlowConfig";
+                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+                AssetDatabase.CreateAsset(settings, $"{path}/Scene Flow Config.asset");
+                AssetDatabase.SaveAssets();
+            }
+
+            return settings;
+        }
+#endif
     }
 }

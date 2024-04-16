@@ -2,6 +2,7 @@ using GadGame.Manager;
 using GadGame.State;
 using GadGame.State.GameState;
 using Pools.Runtime;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
@@ -9,15 +10,20 @@ namespace GadGame.MiniGame
 {
     public class MiniGameController : StateRunner<MiniGameController>
     {
+        [Header("Stats")]
         public int GameTime;
-        
         [SerializeField] private Transform _basket;
-        [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private float _lerp;
         [SerializeField] private float _spawnTime;
         [SerializeField, Range(0,1)] private float _bombChange;
         [SerializeField] private Rect _spawnArea;
+        [SerializeField, MinMaxSlider(0, 2, true)] private Vector2 _gravityScaleRange;
         
+        [Header("UI")]
+        [SerializeField] private TextMeshProUGUI _time;
+        [SerializeField] private TextMeshProUGUI _score;
+        
+        [Header("Pool")]
         [SerializeField] private Pool<Item>[] _itemPools;
         [SerializeField] private Pool<Bomb>[] _bombPools;
 
@@ -30,6 +36,7 @@ namespace GadGame.MiniGame
             _gameManager = GameManager.Instance;   
             _gameManager.OnPause += Pause;
             _gameManager.OnResume += Resume;
+            _gameManager.OnScoreUpdate += OnScoreUpdate;
             _camera = Camera.main;
             SetState<PlayingGameState>();
             _time.text = GameTime.ToString();
@@ -41,17 +48,20 @@ namespace GadGame.MiniGame
             if (_spawnTimer >= _spawnTime)
             {
                 _spawnTimer = 0;
+                var gravity = Random.Range(_gravityScaleRange.x, _gravityScaleRange.y);
                 var bombChance = Random.value;
                 if (bombChance <= _bombChange)
                 {
                     var random = Random.Range(0, _bombPools.Length);
                     var bomb = _bombPools[random].Get();
+                    bomb.Init(gravity);
                     bomb.transform.position = _spawnArea.RandomPointInside();
                 }
                 else
                 {
                     var random = Random.Range(0, _itemPools.Length);
                     var item = _itemPools[random].Get();
+                    item.Init(gravity);
                     item.transform.position = _spawnArea.RandomPointInside();
                 }
             }
@@ -90,6 +100,11 @@ namespace GadGame.MiniGame
         private void Resume()
         {
             SetState<ResumeGameState>();
+        }
+        
+        private void OnScoreUpdate(int score)
+        {
+            _score.text = score.ToString();
         }
 
         private void OnDrawGizmos()

@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace GadGame.Scripts.Editor.PropertyDrawers
+namespace GadGame.Editor.PropertyDrawers
 {
     [UnityEditor.CustomPropertyDrawer(typeof(SceneReference))]
     public class SceneReferencePropertyDrawer : UnityEditor.PropertyDrawer

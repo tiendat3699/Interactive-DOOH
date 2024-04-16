@@ -45,11 +45,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _availableStates:
-  - GadGame.State.IdleState
-  - GadGame.State.PassByState
-  - GadGame.State.ViewedState
-  - GadGame.State.EngageState
-  - GadGame.State.PlayGameState
-  - GadGame.State.RewardState
-  - GadGame.State.CTAState
+  - GadGame.State.MainFlowState.IdleState
+  - GadGame.State.MainFlowState.PassByState
+  - GadGame.State.MainFlowState.ViewedState
+  - GadGame.State.MainFlowState.EngageState
+  - GadGame.State.MainFlowState.PlayGameState
+  - GadGame.State.MainFlowState.RewardState
+  - GadGame.State.MainFlowState.CTAState
   SceneFlowConfig: {fileID: 11400000, guid: 191a17431b0adcb48aea29fa675b8c5a, type: 2}
