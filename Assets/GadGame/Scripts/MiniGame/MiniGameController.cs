@@ -75,7 +75,7 @@ namespace GadGame.MiniGame
             var inputData = DataReceiver.Instance.DataReceived.PosPoint;
             var inputNormalize = new Vector2(inputData.x / 640, inputData.y / 480);
             var input = new Vector2();
-            input.x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
+            input.x = -Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
             input.y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y);
             if (input != Vector2.zero)
             {
