@@ -267,7 +267,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5011611157645887697, guid: 7a832c1c97ca15e40bad68fa0ddb5007, type: 3}
       propertyPath: m_Name
-      value: Data Receive
+      value: Upb Socket
       objectReference: {fileID: 0}
     - target: {fileID: 7936842462643178004, guid: 7a832c1c97ca15e40bad68fa0ddb5007, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

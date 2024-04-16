@@ -19,7 +19,7 @@ namespace GadGame.State.MainFlowState
         {
             if (time >= 2)
             {
-                if (!DataReceiver.Instance.DataReceived.PassBy)
+                if (!UdpSocket.Instance.DataReceived.PassBy)
                 {
                     Runner.SetState<IdleState>();
                     return;
@@ -27,20 +27,20 @@ namespace GadGame.State.MainFlowState
                 
                 switch (_warned)
                 {
-                    case false when !DataReceiver.Instance.DataReceived.Engage:
+                    case false when !UdpSocket.Instance.DataReceived.Engage:
                         _warned = true;
                         PopupManager.Instance.Show("Come Back", 5, () =>
                         {
                             Runner.SetState<ViewedState>();
                         });
                         return;
-                    case true when DataReceiver.Instance.DataReceived.Engage:
+                    case true when UdpSocket.Instance.DataReceived.Engage:
                         _warned = false;
                         PopupManager.Instance.Hide();
                         return;
                 }
             }
-            if (!DataReceiver.Instance.DataReceived.Ready) _readyTimer = 0;
+            if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 0;
             _readyTimer += Time.deltaTime;
             if (_readyTimer >= 5)
             {

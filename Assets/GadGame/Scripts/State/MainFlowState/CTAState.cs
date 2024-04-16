@@ -14,7 +14,7 @@ namespace GadGame.State.MainFlowState
 
         public override void Update(float time)
         {
-            if (!DataReceiver.Instance.DataReceived.PassBy)
+            if (!UdpSocket.Instance.DataReceived.PassBy)
             {
                 _noPassByTimer += Time.deltaTime;
                 if (_noPassByTimer >= 10)

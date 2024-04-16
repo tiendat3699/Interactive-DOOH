@@ -13,12 +13,12 @@ namespace GadGame.State.MainFlowState
         public override void Update(float time)
         {
             if(time < 2) return; 
-            if (!DataReceiver.Instance.DataReceived.PassBy)
+            if (!UdpSocket.Instance.DataReceived.PassBy)
             {
                 Runner.SetState<IdleState>();
                 return;
             }
-            if (DataReceiver.Instance.DataReceived.Engage)
+            if (UdpSocket.Instance.DataReceived.Engage)
             {
                 Runner.SetState<EngageState>();
             }

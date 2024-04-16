@@ -72,7 +72,7 @@ namespace GadGame.MiniGame
         public void PlayerControl()
         {
             //640x480;
-            var inputData = DataReceiver.Instance.DataReceived.PosPoint;
+            var inputData = UdpSocket.Instance.DataReceived.PosPoint;
             var inputNormalize = new Vector2((inputData.x - 213.33f)/ 213.33f, inputData.y / 480);
             var input = new Vector2
             {
