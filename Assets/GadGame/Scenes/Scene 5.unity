@@ -1246,6 +1246,7 @@ MonoBehaviour:
   GameTime: 60
   _basket: {fileID: 1254852291}
   _lerp: 10
+  _speed: 20
   _spawnTime: 0.5
   _bombChange: 0.2
   _spawnArea:

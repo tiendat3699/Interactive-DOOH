@@ -18,6 +18,7 @@ namespace GadGame.Manager
         public void UpdateScore(int value)
         {
             _score += value;
+            if (_score <= 0) _score = 0;
             OnScoreUpdate?.Invoke(_score);
         }
         

@@ -15,6 +15,7 @@ namespace GadGame.MiniGame
         public int GameTime;
         [SerializeField] private Transform _basket;
         [SerializeField] private float _lerp;
+        [SerializeField] private float _speed;
         [SerializeField] private float _spawnTime;
         [SerializeField, Range(0,1)] private float _bombChange;
         [SerializeField] private Rect _spawnArea;
@@ -30,16 +31,14 @@ namespace GadGame.MiniGame
         [SerializeField] private Pool<Bomb>[] _bombPools;
 
         private GameManager _gameManager;
-        private Camera _camera;
         private float _spawnTimer;
-        
+
         private void Start()
         {
             _gameManager = GameManager.Instance;   
             _gameManager.OnPause += Pause;
             _gameManager.OnResume += Resume;
             _gameManager.OnScoreUpdate += OnScoreUpdate;
-            _camera = Camera.main;
             SetState<PlayingGameState>();
             _time.text = GameTime.ToString();
         }
@@ -73,16 +72,13 @@ namespace GadGame.MiniGame
         {
             //640x480;
             var inputData = DataReceiver.Instance.DataReceived.PosPoint;
-            var inputNormalize = new Vector2(inputData.x / 640, inputData.y / 480);
-            var input = new Vector2();
-            input.x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
-            input.y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y);
-            if (input != Vector2.zero)
+            var inputNormalize = new Vector2(inputData.x / 640, -inputData.y / 480).normalized;
+            if (inputNormalize != Vector2.zero)
             {
-                var mousePos = input;
-                var pos = _camera.ScreenToWorldPoint(mousePos);
+                var dirMove = inputNormalize;
                 var currentPosition = _basket.position;
-                pos.x *= -1;
+                var pos = currentPosition + (Vector3)dirMove * (_speed * Time.deltaTime);
+                pos.x = Mathf.Clamp(pos.x, -2.25f, 2.25f);
                 pos.y = currentPosition.y;
                 pos.z = 0;
                 _basket.position = Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
