@@ -1246,7 +1246,6 @@ MonoBehaviour:
   GameTime: 60
   _basket: {fileID: 1254852291}
   _lerp: 10
-  _speed: 10
   _spawnTime: 0.5
   _bombChange: 0.2
   _spawnArea:
@@ -1255,7 +1254,7 @@ MonoBehaviour:
     y: 7
     width: 4.5
     height: 1
-  _gravityScaleRange: {x: 0.1, y: 0.5}
+  _gravityScaleRange: {x: 0.05, y: 0.2}
   _canvas: {fileID: 1939570966}
   _time: {fileID: 1230716510}
   _score: {fileID: 1901652404}

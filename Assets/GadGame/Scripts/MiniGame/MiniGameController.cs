@@ -73,10 +73,12 @@ namespace GadGame.MiniGame
         {
             //640x480;
             var inputData = DataReceiver.Instance.DataReceived.PosPoint;
-            var inputNormalize = new Vector2(inputData.x / 230, inputData.y / 480);
-            var input = new Vector2();
-            input.x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
-            input.y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y);
+            var inputNormalize = new Vector2((inputData.x - 213.33f)/ 213.33f, inputData.y / 480);
+            var input = new Vector2
+            {
+                x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x),
+                y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y)
+            };
             if (input != Vector2.zero)
             {
                 var mousePos = input;
@@ -85,7 +87,9 @@ namespace GadGame.MiniGame
                 pos.x *= -1;
                 pos.y = currentPosition.y;
                 pos.z = 0;
-                _basket.position = Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
+                currentPosition= Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
+                currentPosition.x = Mathf.Clamp(currentPosition.x, -2.25f, 2.25f);
+                _basket.position = currentPosition;
             }
 
         }
