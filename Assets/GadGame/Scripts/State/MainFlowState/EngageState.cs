@@ -42,7 +42,7 @@ namespace GadGame.State.MainFlowState
             }
             if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 0;
             _readyTimer += Time.deltaTime;
-            if (_readyTimer >= 5)
+            if (_readyTimer >= 3)
             {
                 Runner.SetState<PlayGameState>();
             }

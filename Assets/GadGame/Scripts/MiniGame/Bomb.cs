@@ -11,11 +11,13 @@ namespace GadGame.MiniGame
         [SerializeField] private Rigidbody2D _rb;
         
         private bool _inUsed;
+        
+        private Tweener _tweener;
 
         public void Init(float gravityScale = 1)
         {
             _rb.gravityScale = gravityScale;
-            transform.DORotate(new Vector3(0, 0, 1),0.1f).SetLoops(-1, LoopType.Incremental);
+            _tweener = transform.DORotate(new Vector3(0, 0, gravityScale * 50),0.1f).SetLoops(-1, LoopType.Incremental);
         }
 
         private void LateUpdate()
@@ -40,6 +42,9 @@ namespace GadGame.MiniGame
         public void OnRelease()
         {
             _inUsed = false;
+            _tweener.Restart();
+            _tweener.Complete();
+            _tweener.Kill();
         }
     }
 }
