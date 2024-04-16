@@ -1255,6 +1255,7 @@ MonoBehaviour:
     width: 4.5
     height: 1
   _gravityScaleRange: {x: 0.1, y: 0.5}
+  _canvas: {fileID: 1939570966}
   _time: {fileID: 1230716510}
   _score: {fileID: 1901652404}
   _itemPools:

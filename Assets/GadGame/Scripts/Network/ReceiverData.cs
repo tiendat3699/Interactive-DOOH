@@ -1,5 +1,4 @@
-
-using UnityEngine.Serialization;
+using UnityEngine;
 
 namespace GadGame.Network
 {
@@ -19,5 +18,6 @@ namespace GadGame.Network
         public Genders Gender;
         public int AgeMin;
         public int AgeMax;
+        public Vector2 PosPoint;
     }
 }

@@ -1,4 +1,5 @@
 using GadGame.Manager;
+using GadGame.Network;
 using GadGame.State;
 using GadGame.State.GameState;
 using Pools.Runtime;
@@ -18,8 +19,9 @@ namespace GadGame.MiniGame
         [SerializeField, Range(0,1)] private float _bombChange;
         [SerializeField] private Rect _spawnArea;
         [SerializeField, MinMaxSlider(0, 2, true)] private Vector2 _gravityScaleRange;
-        
+
         [Header("UI")]
+        [SerializeField] private Canvas _canvas;
         [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private TextMeshProUGUI _score;
         
@@ -69,9 +71,15 @@ namespace GadGame.MiniGame
         
         public void PlayerControl()
         {
-            if (Input.GetMouseButton(0))
+            //640x480;
+            var inputData = DataReceiver.Instance.DataReceived.PosPoint;
+            var inputNormalize = new Vector2(inputData.x / 640, inputData.y / 480);
+            var input = new Vector2();
+            input.x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x);
+            input.y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y);
+            if (input != Vector2.zero)
             {
-                var mousePos = Input.mousePosition;
+                var mousePos = input;
                 var pos = _camera.ScreenToWorldPoint(mousePos);
                 var currentPosition = _basket.position;
                 pos.y = currentPosition.y;
