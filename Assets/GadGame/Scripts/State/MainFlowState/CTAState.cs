@@ -17,9 +17,24 @@ namespace GadGame.State.MainFlowState
             if (!UdpSocket.Instance.DataReceived.PassBy)
             {
                 _noPassByTimer += Time.deltaTime;
-                if (_noPassByTimer >= 10)
+                if (_noPassByTimer >= 5)
                 {
-                    Runner.SetState<IdleState>();
+                    if(!UdpSocket.Instance.DataReceived.PassBy)
+                    {
+                        Runner.SetState<IdleState>();
+                        return;
+                    }
+                    if(!UdpSocket.Instance.DataReceived.OnVision)
+                    {
+                        Runner.SetState<PassByState>();
+                        return;
+                    }
+                    if(!UdpSocket.Instance.DataReceived.Engage)
+                    {
+                        Runner.SetState<ViewedState>();
+                        return;
+                    }
+                    Runner.SetState<EngageState>();
                 }
             }
             else

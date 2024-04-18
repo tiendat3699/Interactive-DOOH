@@ -6,11 +6,11 @@ using UnityEngine;
 
 namespace GadGame.Manager
 {
+    
     public class PopupManager : PersistentSingleton<PopupManager>
     {
         [SerializeField] private Popup _popupPrefab;
         private Popup _popup;
-        private CancellationTokenSource _cancellationTokenSource;
 
         protected override void Awake()
         {
@@ -18,22 +18,23 @@ namespace GadGame.Manager
             _popup = Instantiate(_popupPrefab, transform, false);
             _popup.gameObject.SetActive(false);
         }
-
-        public async void Show(string message, int duration, Action onDone = null)
+        
+        public Popup Show(string message)
         {
-            _cancellationTokenSource = new CancellationTokenSource();
+            Show(message, 0).SetStay(true);
+            return _popup;
+        }
+
+        public Popup Show(string message, float duration)
+        {
             _popup.gameObject.SetActive(true);
-            _popup.Show(message);
-            if (duration == -1) return;
-            await UniTask.Delay(duration * 1000, cancellationToken: _cancellationTokenSource.Token);
-            _popup.Hide();
-            onDone?.Invoke();
+            _popup.Show(message, duration * 1000);
+            return _popup;
         }
 
         public void Hide()
         {
             _popup.gameObject.SetActive(true);
-            _cancellationTokenSource.Cancel();
             _popup.Hide();
         }
     }

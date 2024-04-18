@@ -8,6 +8,7 @@ namespace GadGame.State.GameState
         public override void Enter()
         {
             Debug.Log("Pause Game");
+            Time.timeScale = 0;
         }
 
         public override void Update(float time)

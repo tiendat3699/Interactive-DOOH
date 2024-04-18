@@ -19,9 +19,17 @@ namespace GadGame.State.MainFlowState
                 Runner.SetState<IdleState>();
                 return;
             }
+            
+            if (UdpSocket.Instance.DataReceived.Engage)
+            {
+                Runner.SetState<EngageState>();
+                return;
+            }
+            
             if (UdpSocket.Instance.DataReceived.OnVision)
             {
                 Runner.SetState<ViewedState>();
+                return;
             }
         }
 

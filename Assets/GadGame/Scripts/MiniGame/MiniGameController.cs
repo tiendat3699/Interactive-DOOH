@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using GadGame.Manager;
 using GadGame.Network;
 using GadGame.State;
@@ -24,6 +26,15 @@ namespace GadGame.MiniGame
         [SerializeField] private Canvas _canvas;
         [SerializeField] private TextMeshProUGUI _time;
         [SerializeField] private TextMeshProUGUI _score;
+        [SerializeField] private TextMeshProUGUI _resultScore;
+        [SerializeField] private CanvasGroup _result;
+
+        [Header("Tutorial")]
+        [SerializeField] private GameObject _tutorialWrapper;
+        [SerializeField] private Transform _thisYou;
+        [SerializeField] private Transform _right;
+        [SerializeField] private Transform _left;
+        [SerializeField] private Transform _end;
         
         [Header("Pool")]
         [SerializeField] private Pool<Item>[] _itemPools;
@@ -40,8 +51,8 @@ namespace GadGame.MiniGame
             _gameManager.OnResume += Resume;
             _gameManager.OnScoreUpdate += OnScoreUpdate;
             _camera = Camera.main;
-            SetState<PlayingGameState>();
             _time.text = GameTime.ToString();
+            SetState<TutorialGameState>();
         }
 
         public void SpawnRandomItem()
@@ -93,17 +104,36 @@ namespace GadGame.MiniGame
             }
         }
 
-        public void ReleaseAllItem()
+        public async void ShowTutorial()
         {
-            // foreach (var pool in _bombPools)
-            // {
-            //     pool.Clear();
-            // }
-            //
-            // foreach (var pool in _itemPools)
-            // {
-            //     pool.Clear();
-            // }
+            _tutorialWrapper.SetActive(true);
+            _thisYou.localScale = Vector3.zero;
+            _right.localScale = Vector3.zero;
+            _left.localScale = Vector3.zero;
+            _end.localScale = Vector3.zero;
+            await _thisYou.DOScale(Vector3.one, 0.2f);
+            await UniTask.Delay(2000);
+            await _right.DOScale(Vector3.one, 0.2f).OnStart(()=> _thisYou.DOScale(Vector3.zero, 0.2f));
+            await UniTask.WaitUntil(() => _basket.position.x >= 1.5f);
+            await _left.DOScale(Vector3.one, 0.2f).OnStart(()=> _right.DOScale(Vector3.zero, 0.2f));
+            await UniTask.WaitUntil(() => _basket.position.x <= -1.5f);
+            await _left.DOScale(Vector3.zero, 0.2f);
+            await _end.DOScale(Vector3.one, 0.2f);
+            await UniTask.Delay(2000);
+            await _end.DOScale(Vector3.zero, 0.2f);
+            _tutorialWrapper.SetActive(false);
+            SetState<PlayingGameState>();
+        }
+
+        public async void ShowResult()
+        {
+            await _result.DOFade(1, 0.3f);
+            await _resultScore.DOText(_gameManager.Score.ToString(), 1f, scrambleMode: ScrambleMode.Numerals);
+        }
+
+        public void DisableBasket()
+        {
+            _basket.GetComponent<Basket>().enabled = false;
         }
 
         public void SetTextTime(float time)
@@ -116,12 +146,14 @@ namespace GadGame.MiniGame
             _gameManager.OnPause -= Pause;
             _gameManager.OnResume -= Resume;
         }
-
+    
+        [Button, HideInEditorMode]
         private void Pause()
         {
             SetState<PauseGameState>();
         }
 
+        [Button, HideInEditorMode]
         private void Resume()
         {
             SetState<ResumeGameState>();

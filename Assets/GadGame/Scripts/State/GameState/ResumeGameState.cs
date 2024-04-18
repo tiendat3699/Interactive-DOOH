@@ -8,6 +8,7 @@ namespace GadGame.State.GameState
         public override void Enter()
         {
             Debug.Log("Resume Game");
+            Time.timeScale = 1;
             Runner.SetState<PlayingGameState>();
         }
 

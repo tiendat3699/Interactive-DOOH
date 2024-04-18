@@ -9,7 +9,7 @@ namespace GadGame.Manager
     public class GameManager : Singleton.Singleton<GameManager>
     {
         private int _score;
-        
+        public int Score => _score;
         public event Action OnEnd;
         public event Action OnPause;
         public event Action OnResume;

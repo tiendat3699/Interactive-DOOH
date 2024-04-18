@@ -15,6 +15,7 @@ namespace GadGame.State.MainFlowState
             await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameScene.ScenePath);
             _gameManager = GameManager.Instance;
             _gameManager.OnEnd += OnEndGame;
+            _leaveTimer = 0;
         }
         
         public override void Update(float time)
@@ -30,7 +31,7 @@ namespace GadGame.State.MainFlowState
                         _warned = true;
                         _leaveTimer = 0;
                         _gameManager.Pause();
-                        PopupManager.Instance.Show("Where Are You?", 30, () => Runner.SetState<IdleState>());
+                        PopupManager.Instance.Show("Where Are You?", 5).OnComplete(OnWaringComplete);
                     }
                     return;
                 }
@@ -44,12 +45,33 @@ namespace GadGame.State.MainFlowState
 
         public override void Exit()
         {
-            
+            _warned = false;
         }
 
         private void OnEndGame()
         {
             Runner.SetState<RewardState>();
+        }
+
+        private void OnWaringComplete()
+        {
+            _gameManager.Resume();
+            if(!UdpSocket.Instance.DataReceived.PassBy)
+            {
+                Runner.SetState<IdleState>();
+                return;
+            }
+            if(!UdpSocket.Instance.DataReceived.OnVision)
+            {
+                Runner.SetState<PassByState>();
+                return;
+            }
+            if(!UdpSocket.Instance.DataReceived.Engage)
+            {
+                Runner.SetState<ViewedState>();
+                return;
+            }
+            Runner.SetState<EngageState>();
         }
     }
 }

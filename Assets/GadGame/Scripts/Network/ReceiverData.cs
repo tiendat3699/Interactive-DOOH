@@ -15,7 +15,7 @@ namespace GadGame.Network
         public bool OnVision;
         public bool Engage;
         public bool Ready;
-        public Genders Gender;
+        public string Gender;
         public int AgeMin;
         public int AgeMax;
         public Vector2 PosPoint;
