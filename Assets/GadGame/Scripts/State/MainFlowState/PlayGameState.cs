@@ -46,11 +46,12 @@ namespace GadGame.State.MainFlowState
         public override void Exit()
         {
             _warned = false;
+            _gameManager.OnEnd -= OnEndGame;
         }
 
         private void OnEndGame()
         {
-            Runner.SetState<RewardState>();
+            Runner.SetState<CTAState>();
         }
 
         private void OnWaringComplete()

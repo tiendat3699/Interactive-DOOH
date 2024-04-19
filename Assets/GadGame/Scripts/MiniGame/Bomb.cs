@@ -31,6 +31,7 @@ namespace GadGame.MiniGame
         public void Collect()
         {
             GameManager.Instance.UpdateScore(-_reduceScore);
+            SoundManager.Instance.PlaySfx(SoundDefine.GetHit);
             this.Release();
         }
 

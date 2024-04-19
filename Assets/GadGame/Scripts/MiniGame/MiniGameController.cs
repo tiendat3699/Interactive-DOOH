@@ -1,3 +1,4 @@
+using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using GadGame.Manager;
@@ -8,6 +9,7 @@ using Pools.Runtime;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace GadGame.MiniGame
 {
@@ -15,7 +17,7 @@ namespace GadGame.MiniGame
     {
         [Header("Stats")]
         public int GameTime;
-        [SerializeField] private Transform _basket;
+        [SerializeField] private Basket _basket;
         [SerializeField] private float _lerp;
         [SerializeField] private float _spawnTime;
         [SerializeField, Range(0,1)] private float _bombChange;
@@ -43,6 +45,7 @@ namespace GadGame.MiniGame
         private GameManager _gameManager;
         private Camera _camera;
         private float _spawnTimer;
+        private Vector3 _preFramePosition;
         
         private void Start()
         {
@@ -52,7 +55,13 @@ namespace GadGame.MiniGame
             _gameManager.OnScoreUpdate += OnScoreUpdate;
             _camera = Camera.main;
             _time.text = GameTime.ToString();
+            SoundManager.Instance.PlayMusic(MusicDefine.BG);
             SetState<TutorialGameState>();
+        }
+
+        private void LateUpdate()
+        {
+            _preFramePosition = _basket.Position;
         }
 
         public void SpawnRandomItem()
@@ -94,13 +103,15 @@ namespace GadGame.MiniGame
             {
                 var mousePos = input;
                 var pos = _camera.ScreenToWorldPoint(mousePos);
-                var currentPosition = _basket.position;
+                var currentPosition = _basket.Position;
                 pos.x *= -1;
                 pos.y = currentPosition.y;
                 pos.z = 0;
                 currentPosition= Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
                 currentPosition.x = Mathf.Clamp(currentPosition.x, -2.25f, 2.25f);
-                _basket.position = currentPosition;
+                var dirMove = (_preFramePosition - currentPosition).normalized;
+                _basket.transform.DORotate(new Vector3(0, 0, 10 * dirMove.x), 0.2f);
+                _basket.Position = currentPosition;
             }
         }
 
@@ -114,9 +125,9 @@ namespace GadGame.MiniGame
             await _thisYou.DOScale(Vector3.one, 0.2f);
             await UniTask.Delay(2000);
             await _right.DOScale(Vector3.one, 0.2f).OnStart(()=> _thisYou.DOScale(Vector3.zero, 0.2f));
-            await UniTask.WaitUntil(() => _basket.position.x >= 1.5f);
+            await UniTask.WaitUntil(() => _basket.Position.x >= 1.5f);
             await _left.DOScale(Vector3.one, 0.2f).OnStart(()=> _right.DOScale(Vector3.zero, 0.2f));
-            await UniTask.WaitUntil(() => _basket.position.x <= -1.5f);
+            await UniTask.WaitUntil(() => _basket.Position.x <= -1.5f);
             await _left.DOScale(Vector3.zero, 0.2f);
             await _end.DOScale(Vector3.one, 0.2f);
             await UniTask.Delay(2000);
@@ -131,9 +142,9 @@ namespace GadGame.MiniGame
             await _resultScore.DOText(_gameManager.Score.ToString(), 1f, scrambleMode: ScrambleMode.Numerals);
         }
 
-        public void DisableBasket()
+        public void SetActive(bool value)
         {
-            _basket.GetComponent<Basket>().enabled = false;
+            _basket.Active = value;
         }
 
         public void SetTextTime(float time)
@@ -145,6 +156,7 @@ namespace GadGame.MiniGame
         {
             _gameManager.OnPause -= Pause;
             _gameManager.OnResume -= Resume;
+            SoundManager.Instance.StopMusic();
         }
     
         [Button, HideInEditorMode]

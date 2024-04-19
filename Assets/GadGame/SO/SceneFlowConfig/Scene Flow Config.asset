@@ -15,23 +15,23 @@ MonoBehaviour:
   IdleScene:
     _sceneAsset: {fileID: 102900000, guid: 632910d4b45f36a478868b8cdc4b3ec2, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Scene 1.unity
+    _scenePath: Assets/GadGame/Scenes/Idle.unity
   PassByScene:
     _sceneAsset: {fileID: 102900000, guid: c9e32be920223db4eb26536f66c3d91a, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Scene 2.unity
+    _scenePath: Assets/GadGame/Scenes/PassBy.unity
   ViewedScene:
     _sceneAsset: {fileID: 102900000, guid: f55162ea91535d84290df33ce2b3c2fb, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Scene 3.unity
+    _scenePath: Assets/GadGame/Scenes/Viewer.unity
   EndGageScene:
     _sceneAsset: {fileID: 102900000, guid: cdaaa0ee6b3b73b4b9f984ca2bf1d535, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Scene 4.unity
+    _scenePath: Assets/GadGame/Scenes/Engage.unity
   GameScene:
     _sceneAsset: {fileID: 102900000, guid: 79d05a23a33b9504c8ae8344c73927fe, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Scene 5.unity
+    _scenePath: Assets/GadGame/Scenes/Game.unity
   RewardScene:
     _sceneAsset: {fileID: 102900000, guid: 2b401697cdf0bc04fa20a817815f9e83, type: 3}
     _isDirty: 0
@@ -39,4 +39,4 @@ MonoBehaviour:
   CTAScene:
     _sceneAsset: {fileID: 102900000, guid: 46cab2f289b2fed4bb929899e3c5cf4b, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Scene 7.unity
+    _scenePath: Assets/GadGame/Scenes/CTA.unity
