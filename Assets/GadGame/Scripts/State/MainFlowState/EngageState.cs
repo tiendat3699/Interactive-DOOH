@@ -13,7 +13,7 @@ namespace GadGame.State.MainFlowState
         public override void Enter()
         {
             LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.EndGageScene.ScenePath);
-            _readyTimer = 3;
+            _readyTimer = 5;
         }
 
         public override void Update(float time)
@@ -34,30 +34,29 @@ namespace GadGame.State.MainFlowState
                         PopupManager.Instance.Hide();
                         break;
                 }
-
                 
+                switch (_showCountDown)
+                {
+                    case false when UdpSocket.Instance.DataReceived.Ready:
+                        _showCountDown = true;
+                        Runner.Ready(true);
+                        break;
+                    case true when !UdpSocket.Instance.DataReceived.Ready:
+                        _showCountDown = false;
+                        Runner.Ready(false);
+                        break;
+                }
+
+                if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 5;
+                _readyTimer -= Time.deltaTime;
+                if (_readyTimer <= 0)
+                {
+                    _readyTimer = 0;
+                    Runner.SetState<PlayGameState>();
+                }
+                Runner.ReadyCountDown(_readyTimer);
             }
             
-            switch (_showCountDown)
-            {
-                case false when UdpSocket.Instance.DataReceived.Ready:
-                    _showCountDown = true;
-                    Runner.Ready(true);
-                    break;
-                case true when !UdpSocket.Instance.DataReceived.Ready:
-                    _showCountDown = false;
-                    Runner.Ready(false);
-                    break;
-            }
-
-            if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 5;
-            _readyTimer -= Time.deltaTime;
-            if (_readyTimer <= 0)
-            {
-                _readyTimer = 0;
-                Runner.SetState<PlayGameState>();
-            }
-            Runner.ReadyCountDown(_readyTimer);
         }
 
         public override void Exit()

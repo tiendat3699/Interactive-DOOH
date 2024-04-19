@@ -21,8 +21,8 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(sceneIndex);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
-            await UniTask.Delay(200, ignoreTimeScale:true);
             asyncOperation.allowSceneActivation = true;
+            await UniTask.Delay(200, ignoreTimeScale:true);
             await _transitionCanvasGroup.DOFade(0, transitionDuration).SetUpdate(true);;
         }
         
@@ -32,8 +32,8 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(sceneIndex);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
-            await UniTask.Delay(200, ignoreTimeScale:true);
             asyncOperation.allowSceneActivation = true;
+            await UniTask.Delay(200, ignoreTimeScale:true);
             await _transitionCanvasGroup.DOFade(0, transitionDuration/2).SetUpdate(true);;
         }
         
@@ -43,8 +43,8 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(scenePath);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
-            await UniTask.Delay(200, ignoreTimeScale:true);
             asyncOperation.allowSceneActivation = true;
+            await UniTask.Delay(200, ignoreTimeScale:true);
             await _transitionCanvasGroup.DOFade(0, transitionDuration/2).SetUpdate(true);;
         }
 
@@ -54,8 +54,8 @@ namespace GadGame.Manager
             var asyncOperation =  SceneManager.LoadSceneAsync(scenePath);
             asyncOperation.allowSceneActivation = false;
             await UniTask.WaitUntil(() => asyncOperation.progress >= 0.9f);
-            await UniTask.Delay(200, ignoreTimeScale:true);
             asyncOperation.allowSceneActivation = true;
+            await UniTask.Delay(200, ignoreTimeScale:true);
             await _transitionCanvasGroup.DOFade(0, transitionDuration/2).SetUpdate(true);;
         }
     }

@@ -1,7 +1,9 @@
 using System;
+using GadGame.Manager;
 using GadGame.SO;
 using GadGame.State;
 using GadGame.State.MainFlowState;
+using Sirenix.OdinInspector;
 
 namespace GadGame
 {

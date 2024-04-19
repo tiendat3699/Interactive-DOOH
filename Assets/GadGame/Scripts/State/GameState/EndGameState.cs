@@ -10,7 +10,7 @@ namespace GadGame.State.GameState
         public override async void Enter()
         {
             Debug.Log("End Game");
-            Runner.DisableBasket();
+            Runner.SetActive(false);
             await UniTask.Delay(1000);
             Runner.ShowResult();
             await UniTask.Delay(4000);

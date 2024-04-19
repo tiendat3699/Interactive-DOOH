@@ -1,0 +1,12 @@
+namespace $[namespace]
+{
+	public enum MusicDefine
+	{
+$[backgroundMusicBody]
+	}
+    public enum SoundDefine
+    {
+$[soundEffectsBody]
+    }
+
+}

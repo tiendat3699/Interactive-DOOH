@@ -6,7 +6,6 @@ namespace GadGame.State.MainFlowState
 {
     public class CTAState : State<MainFlow>
     {
-        private float _noPassByTimer;
         public override void Enter()
         {
             LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTAScene.ScenePath);
@@ -14,38 +13,30 @@ namespace GadGame.State.MainFlowState
 
         public override void Update(float time)
         {
-            if (!UdpSocket.Instance.DataReceived.PassBy)
+            if (time >= 10)
             {
-                _noPassByTimer += Time.deltaTime;
-                if (_noPassByTimer >= 5)
+                if(!UdpSocket.Instance.DataReceived.PassBy)
                 {
-                    if(!UdpSocket.Instance.DataReceived.PassBy)
-                    {
-                        Runner.SetState<IdleState>();
-                        return;
-                    }
-                    if(!UdpSocket.Instance.DataReceived.OnVision)
-                    {
-                        Runner.SetState<PassByState>();
-                        return;
-                    }
-                    if(!UdpSocket.Instance.DataReceived.Engage)
-                    {
-                        Runner.SetState<ViewedState>();
-                        return;
-                    }
-                    Runner.SetState<EngageState>();
+                    Runner.SetState<IdleState>();
+                    return;
                 }
-            }
-            else
-            {
-                _noPassByTimer = 0;
+                if(!UdpSocket.Instance.DataReceived.OnVision)
+                {
+                    Runner.SetState<PassByState>();
+                    return;
+                }
+                if(!UdpSocket.Instance.DataReceived.Engage)
+                {
+                    Runner.SetState<ViewedState>();
+                    return;
+                }
+                Runner.SetState<EngageState>();
             }
         }
 
         public override void Exit()
         {
-            _noPassByTimer = 0;
+
         }
     }
 }

@@ -1,6 +1,8 @@
+using UnityEngine;
+#if UNITY_EDITOR
 using System.IO;
 using UnityEditor;
-using UnityEngine;
+#endif
 
 namespace GadGame.SO
 {
@@ -12,10 +14,9 @@ namespace GadGame.SO
         public SceneReference ViewedScene;
         public SceneReference EndGageScene;
         public SceneReference GameScene;
-        public SceneReference RewardScene;
         public SceneReference CTAScene;
-        
-        
+
+
 #if UNITY_EDITOR
         public static SceneFlowConfig FindSettings()
         {
@@ -38,7 +39,7 @@ namespace GadGame.SO
             if (settings == null)
             {
                 settings = CreateInstance<SceneFlowConfig>();
-                string path = "Assets/_Game/SO/SceneFlowConfig";
+                string path = "Assets/GadGame/SO/SceneFlowConfig";
                 if (!Directory.Exists(path)) Directory.CreateDirectory(path);
                 AssetDatabase.CreateAsset(settings, $"{path}/Scene Flow Config.asset");
                 AssetDatabase.SaveAssets();

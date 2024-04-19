@@ -50,6 +50,6 @@ MonoBehaviour:
   - GadGame.State.MainFlowState.ViewedState
   - GadGame.State.MainFlowState.EngageState
   - GadGame.State.MainFlowState.PlayGameState
-  - GadGame.State.MainFlowState.RewardState
+  - GadGame.State.MainFlowState.CTAState
   - GadGame.State.MainFlowState.CTAState
   SceneFlowConfig: {fileID: 11400000, guid: 191a17431b0adcb48aea29fa675b8c5a, type: 2}
