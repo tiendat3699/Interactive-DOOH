@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7869838380349165436
+--- !u!1 &98078057992520876
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,41 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1031400425691494886}
-  - component: {fileID: 3253116021677228158}
-  - component: {fileID: 4161882844417404082}
-  - component: {fileID: 9129339961973675669}
-  - component: {fileID: 9094510377780948320}
-  m_Layer: 6
-  m_Name: Bomb
+  - component: {fileID: 5131312940411862558}
+  - component: {fileID: 6244318180748585680}
+  m_Layer: 0
+  m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1031400425691494886
+--- !u!4 &5131312940411862558
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7869838380349165436}
+  m_GameObject: {fileID: 98078057992520876}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.024, y: 0.07, z: 0}
-  m_LocalScale: {x: 0.42, y: 0.42, z: 0.42}
-  m_ConstrainProportionsScale: 1
-  m_Children:
-  - {fileID: 8679570863066357004}
-  m_Father: {fileID: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1031400425691494886}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3253116021677228158
+--- !u!212 &6244318180748585680
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7869838380349165436}
+  m_GameObject: {fileID: 98078057992520876}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -88,6 +84,42 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &7869838380349165436
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1031400425691494886}
+  - component: {fileID: 4161882844417404082}
+  - component: {fileID: 9129339961973675669}
+  - component: {fileID: 9094510377780948320}
+  m_Layer: 6
+  m_Name: Bomb
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1031400425691494886
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7869838380349165436}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.42, y: 0.42, z: 0.42}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 5131312940411862558}
+  - {fileID: 8679570863066357004}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4161882844417404082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -102,6 +134,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _reduceScore: 3
   _rb: {fileID: 9129339961973675669}
+  _sprite: {fileID: 6244318180748585680}
+  _trail: {fileID: 5046750308458126215}
 --- !u!50 &9129339961973675669
 Rigidbody2D:
   serializedVersion: 4
@@ -217,10 +251,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2692383457585442039, guid: 192ed0f6b6bdd9c4992c815d6ab73d26, type: 3}
-      propertyPath: m_Parameters.textureScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2692383457585442039, guid: 192ed0f6b6bdd9c4992c815d6ab73d26, type: 3}
       propertyPath: m_Parameters.widthMultiplier
       value: 4
       objectReference: {fileID: 0}
@@ -245,6 +275,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 192ed0f6b6bdd9c4992c815d6ab73d26, type: 3}
+--- !u!96 &5046750308458126215 stripped
+TrailRenderer:
+  m_CorrespondingSourceObject: {fileID: 2692383457585442039, guid: 192ed0f6b6bdd9c4992c815d6ab73d26, type: 3}
+  m_PrefabInstance: {fileID: 7157606119336703856}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8679570863066357004 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1954821041849068156, guid: 192ed0f6b6bdd9c4992c815d6ab73d26, type: 3}

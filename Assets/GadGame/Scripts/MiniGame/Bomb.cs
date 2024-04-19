@@ -9,6 +9,8 @@ namespace GadGame.MiniGame
     {
         [SerializeField] private int _reduceScore;
         [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private SpriteRenderer _sprite;
+        [SerializeField] private TrailRenderer _trail;
         
         private bool _inUsed;
         
@@ -17,7 +19,7 @@ namespace GadGame.MiniGame
         public void Init(float gravityScale = 1)
         {
             _rb.gravityScale = gravityScale;
-            _tweener = transform.DORotate(new Vector3(0, 0, gravityScale * 50),0.1f).SetLoops(-1, LoopType.Incremental);
+            _tweener = _sprite.transform.DORotate(new Vector3(0, 0, gravityScale * 50),0.1f).SetLoops(-1, LoopType.Incremental);
         }
 
         private void LateUpdate()
@@ -42,6 +44,7 @@ namespace GadGame.MiniGame
 
         public void OnRelease()
         {
+            _trail.Clear();
             _inUsed = false;
             _tweener.Restart();
             _tweener.Complete();

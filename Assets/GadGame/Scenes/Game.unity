@@ -4253,7 +4253,7 @@ MonoBehaviour:
   _basket: {fileID: 1254852293}
   _lerp: 10
   _spawnTime: 0.5
-  _bombChange: 0.1
+  _bombChange: 0.15
   _spawnArea:
     serializedVersion: 2
     x: 0
