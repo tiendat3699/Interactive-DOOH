@@ -23,11 +23,13 @@ namespace GadGame
             _mainFlow.OnReady += OnReady;
             _content.localScale = Vector3.zero;
         }
-        
+
         private void OnDestroy()
         {
             _canvasGroup.DOKill();
             _content.DOKill();
+            _mainFlow.OnReadyCountDown -= OnReadyCountdown;
+            _mainFlow.OnReady -= OnReady;
         }
 
         private async void OnReady(bool ready)
