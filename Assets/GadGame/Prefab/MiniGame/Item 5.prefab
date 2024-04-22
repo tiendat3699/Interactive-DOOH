@@ -101,6 +101,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _score: 1
   _rb: {fileID: 2588217058180321427}
+  _hitEffect:
+    _source: {fileID: 7822100971843210285, guid: 94e32408763f55947a785707a14af4c8, type: 3}
+    _defaultCapacity: 10
+    _max: 100
+    _collectionCheck: 0
 --- !u!50 &2588217058180321427
 Rigidbody2D:
   serializedVersion: 4

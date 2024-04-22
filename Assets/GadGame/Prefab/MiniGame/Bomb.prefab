@@ -136,6 +136,11 @@ MonoBehaviour:
   _rb: {fileID: 9129339961973675669}
   _sprite: {fileID: 6244318180748585680}
   _trail: {fileID: 5046750308458126215}
+  _hitEffect:
+    _source: {fileID: 6810937532904219531, guid: 6dcbf6becdc41ac4ba57ccc2d9de4dc3, type: 3}
+    _defaultCapacity: 10
+    _max: 100
+    _collectionCheck: 0
 --- !u!50 &9129339961973675669
 Rigidbody2D:
   serializedVersion: 4
