@@ -10,9 +10,13 @@ namespace GadGame.State.MainFlowState
         private bool _warned;
         private bool _showCountDown;
 
+        private PassByAnimation passByAnim;
+
         public override void Enter()
         {
-            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.EndGageScene.ScenePath);
+            passByAnim = PassByAnimation.Instance;
+            passByAnim.Play(true);
+            // LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.EndGageScene.ScenePath);
             _readyTimer = 5;
         }
 
@@ -27,11 +31,13 @@ namespace GadGame.State.MainFlowState
                         break;
                     case false when !UdpSocket.Instance.DataReceived.Engage:
                         _warned = true;
-                        PopupManager.Instance.Show("Come Back", 5).OnComplete(OnWaringComplete);
+                        passByAnim.Play(false);
+                        // PopupManager.Instance.Show("Come Back", 5).OnComplete(OnWaringComplete);
                         break;
                     case true when UdpSocket.Instance.DataReceived.Engage:
                         _warned = false;
-                        PopupManager.Instance.Hide();
+                        passByAnim.Play(true);
+                        // PopupManager.Instance.Hide();
                         break;
                 }
                 
@@ -64,21 +70,21 @@ namespace GadGame.State.MainFlowState
             _warned = false;
         }
 
-        private void OnWaringComplete()
-        {
-            if (!UdpSocket.Instance.DataReceived.PassBy)
-            {
-                Runner.SetState<IdleState>();
-                return;
-            }
+        // private void OnWaringComplete()
+        // {
+        //     if (!UdpSocket.Instance.DataReceived.PassBy)
+        //     {
+        //         Runner.SetState<IdleState>();
+        //         return;
+        //     }
 
-            if (!UdpSocket.Instance.DataReceived.OnVision)
-            {
-                Runner.SetState<PassByState>();
-                return;
-            }
+        //     if (!UdpSocket.Instance.DataReceived.OnVision)
+        //     {
+        //         Runner.SetState<PassByState>();
+        //         return;
+        //     }
 
-            Runner.SetState<ViewedState>();
-        }
+        //     Runner.SetState<ViewedState>();
+        // }
     }
 }

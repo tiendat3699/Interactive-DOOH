@@ -15,12 +15,13 @@ namespace GadGame.State.MainFlowState
             await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameScene.ScenePath);
             _gameManager = GameManager.Instance;
             _gameManager.OnEnd += OnEndGame;
-            _leaveTimer = 0;
+            _leaveTimer = 0; 
         }
         
         public override void Update(float time)
         {
             UdpSocket.Instance.SendDataToPython("1");
+            // Debug.Log("Playing Game");
             switch (_warned)
             {
                 case false when !UdpSocket.Instance.DataReceived.Engage:
@@ -31,7 +32,7 @@ namespace GadGame.State.MainFlowState
                         _warned = true;
                         _leaveTimer = 0;
                         _gameManager.Pause();
-                        PopupManager.Instance.Show("Where Are You?", 5).OnComplete(OnWaringComplete);
+                        PopupManager.Instance.Show("Where Are You?", 10).OnComplete(OnWaringComplete);
                     }
                     return;
                 }
@@ -62,17 +63,17 @@ namespace GadGame.State.MainFlowState
                 Runner.SetState<IdleState>();
                 return;
             }
-            if(!UdpSocket.Instance.DataReceived.OnVision)
-            {
-                Runner.SetState<PassByState>();
-                return;
-            }
+            // if(!UdpSocket.Instance.DataReceived.OnVision)
+            // {
+            //     Runner.SetState<PassByState>();
+            //     return;
+            // }
             if(!UdpSocket.Instance.DataReceived.Engage)
             {
                 Runner.SetState<ViewedState>();
                 return;
             }
-            Runner.SetState<EngageState>();
+            // Runner.SetState<EngageState>();
         }
     }
 }

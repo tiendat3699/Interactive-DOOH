@@ -1,14 +1,18 @@
 using GadGame.Manager;
 using GadGame.Network;
+using UnityEngine;
+
 
 namespace GadGame.State.MainFlowState
 {
     public class PassByState : State<MainFlow>
     {
-
-        public override void Enter()
+        private PassByAnimation passByAnim;
+        public async override void Enter()
         {
-            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.PassByScene.ScenePath);
+            await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.PassByScene.ScenePath);
+            passByAnim = PassByAnimation.Instance;
+            passByAnim.Play(false);
         }
         
         public override void Update(float time)
@@ -23,14 +27,15 @@ namespace GadGame.State.MainFlowState
             if (UdpSocket.Instance.DataReceived.Engage)
             {
                 Runner.SetState<EngageState>();
+
                 return;
             }
             
-            if (UdpSocket.Instance.DataReceived.OnVision)
-            {
-                Runner.SetState<ViewedState>();
-                return;
-            }
+            // if (UdpSocket.Instance.DataReceived.OnVision)
+            // {
+            //     Runner.SetState<ViewedState>();
+            //     return;
+            // }
         }
 
         public override void Exit()

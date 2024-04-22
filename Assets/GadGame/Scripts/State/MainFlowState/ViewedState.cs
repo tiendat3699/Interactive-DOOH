@@ -7,7 +7,7 @@ namespace GadGame.State.MainFlowState
     {
         public override void Enter()
         {
-            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.ViewedScene.ScenePath);
+            // LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.ViewedScene.ScenePath);
         }
         
         public override void Update(float time)
