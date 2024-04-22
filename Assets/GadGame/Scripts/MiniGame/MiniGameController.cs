@@ -93,8 +93,8 @@ namespace GadGame.MiniGame
         {
             //640x480;
             var inputData = UdpSocket.Instance.DataReceived.PosPoint;
-            // var inputNormalize = new Vector2((inputData.x - 213.33f)/ 213.33f, inputData.y / 480);
-            var inputNormalize = new Vector2(inputData.x/ 200, inputData.y / 480);
+            var inputNormalize = new Vector2((inputData.x - 213.33f)/ 213.33f, inputData.y / 480);
+            // var inputNormalize = new Vector2(inputData.x/ 200, inputData.y / 480);
             var input = new Vector2
             {
                 x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x),

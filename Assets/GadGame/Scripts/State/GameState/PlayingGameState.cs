@@ -9,7 +9,6 @@ namespace GadGame.State.GameState
         
         public override void Enter()
         {
-            Debug.Log("Playing Game");
             Runner.SetActive(true);
         }
 
