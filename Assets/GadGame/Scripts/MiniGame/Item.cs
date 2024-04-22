@@ -9,6 +9,7 @@ namespace GadGame.MiniGame
     {
         [SerializeField] private int _score;
         [SerializeField] private Rigidbody2D _rb;
+        [SerializeField] private Pool<ParticleObject> _hitEffect;
 
         private bool _inUsed;
         private Tweener _tweener;
@@ -31,6 +32,8 @@ namespace GadGame.MiniGame
         {
             GameManager.Instance.UpdateScore(_score);
             SoundManager.Instance.PlaySfx(SoundDefine.CollectStar);
+            var fx = _hitEffect.Get();
+            fx.transform.position = transform.position;
             this.Release();
         }
 

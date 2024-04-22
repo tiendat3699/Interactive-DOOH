@@ -11,6 +11,7 @@ namespace GadGame.MiniGame
         [SerializeField] private Rigidbody2D _rb;
         [SerializeField] private SpriteRenderer _sprite;
         [SerializeField] private TrailRenderer _trail;
+        [SerializeField] private Pool<ParticleObject> _hitEffect;
         
         private bool _inUsed;
         
@@ -35,6 +36,8 @@ namespace GadGame.MiniGame
             GameManager.Instance.UpdateScore(-_reduceScore);
             SoundManager.Instance.PlaySfx(SoundDefine.GetHit);
             this.Release();
+            var fx = _hitEffect.Get();
+            fx.transform.position = transform.position;
         }
 
         public void OnGet()
