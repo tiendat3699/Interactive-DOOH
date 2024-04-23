@@ -20,17 +20,17 @@ namespace GadGame.State.MainFlowState
                     Runner.SetState<IdleState>();
                     return;
                 }
-                if(!UdpSocket.Instance.DataReceived.OnVision)
-                {
-                    Runner.SetState<PassByState>();
-                    return;
-                }
+                // if(!UdpSocket.Instance.DataReceived.OnVision)
+                // {
+                //     Runner.SetState<PassByState>();
+                //     return;
+                // }
                 if(!UdpSocket.Instance.DataReceived.Engage)
                 {
                     Runner.SetState<ViewedState>();
                     return;
                 }
-                Runner.SetState<EngageState>();
+                Runner.SetState<PassByState>();
             }
         }
 

@@ -54,7 +54,7 @@ namespace GadGame.State
         {
             if (ActiveState != null)
             {
-                Debug.Log(ActiveState);
+                // Debug.Log(ActiveState);
                 _timer += Time.deltaTime;
                 ActiveState.Update(_timer);
             }
