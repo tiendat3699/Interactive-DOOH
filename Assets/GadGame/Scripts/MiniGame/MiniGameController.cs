@@ -41,11 +41,12 @@ namespace GadGame.MiniGame
         [Header("Pool")]
         [SerializeField] private Pool<Item>[] _itemPools;
         [SerializeField] private Pool<Bomb>[] _bombPools;
-
+    
         private GameManager _gameManager;
         private Camera _camera;
         private float _spawnTimer;
         private Vector3 _preFramePosition;
+
         
         private void Start()
         {
