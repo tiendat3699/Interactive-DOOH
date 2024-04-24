@@ -8,10 +8,12 @@ namespace GadGame.State.MainFlowState
     {
         public override void Enter()
         {
-            if(UdpSocket.Instance.DataReceived.Gender <= 0.5f) {
+            if(UdpSocket.Instance.DataReceived.Gender <= 0.3f) {
                 LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneMale.ScenePath);
-            } else {
+            } else if (UdpSocket.Instance.DataReceived.Gender >= 0.7f){
                 LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneFemale.ScenePath);
+            } else {
+                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneBoth.ScenePath);
             }
         }
 

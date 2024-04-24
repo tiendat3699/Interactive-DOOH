@@ -16,6 +16,7 @@ namespace GadGame.SO
         public SceneReference GameScene;
         public SceneReference CTASceneMale;
         public SceneReference CTASceneFemale;
+        public SceneReference CTASceneBoth;
 
 
 #if UNITY_EDITOR
