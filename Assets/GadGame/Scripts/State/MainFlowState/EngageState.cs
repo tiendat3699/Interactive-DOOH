@@ -26,7 +26,7 @@ namespace GadGame.State.MainFlowState
             {
                 switch (_warned)
                 {
-                    case false when !UdpSocket.Instance.DataReceived.PassBy:
+                    case true when !UdpSocket.Instance.DataReceived.PassBy:
                         Runner.SetState<IdleState>();
                         break;
                     case false when !UdpSocket.Instance.DataReceived.Engage:

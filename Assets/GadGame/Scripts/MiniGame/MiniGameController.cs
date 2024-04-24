@@ -149,7 +149,7 @@ namespace GadGame.MiniGame
 
         public void CountDownEndGame(float time){
             var countDownTime = 10 - time;
-            Debug.Log("EndGame CountDown " + countDownTime.ToString());
+            // Debug.Log("EndGame CountDown " + countDownTime.ToString());
             var fill = countDownTime / 10;
             CircleImgEndGame.fillAmount = fill;
             txtProgressEndGame.text = Mathf.Ceil(countDownTime).ToString();
