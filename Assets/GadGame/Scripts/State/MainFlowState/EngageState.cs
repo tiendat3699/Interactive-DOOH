@@ -45,22 +45,23 @@ namespace GadGame.State.MainFlowState
                 {
                     case false when UdpSocket.Instance.DataReceived.Ready:
                         _showCountDown = true;
-                        Runner.Ready(true);
+                        // Runner.Ready(true);
                         break;
                     case true when !UdpSocket.Instance.DataReceived.Ready:
                         _showCountDown = false;
-                        Runner.Ready(false);
+                        // Runner.Ready(false);
                         break;
                 }
 
-                if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 5;
+                if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 3;
+                passByAnim.ReadyCountDown(_readyTimer / 3);
                 _readyTimer -= Time.deltaTime;
                 if (_readyTimer <= 0)
                 {
                     _readyTimer = 0;
                     Runner.SetState<PlayGameState>();
                 }
-                Runner.ReadyCountDown(_readyTimer);
+                // Runner.ReadyCountDown(_readyTimer);
             }
             
         }

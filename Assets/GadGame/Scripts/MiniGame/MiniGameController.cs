@@ -9,6 +9,7 @@ using Pools.Runtime;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace GadGame.MiniGame
@@ -30,6 +31,8 @@ namespace GadGame.MiniGame
         [SerializeField] private TextMeshProUGUI _score;
         [SerializeField] private TextMeshProUGUI _resultScore;
         [SerializeField] private CanvasGroup _result;
+        [SerializeField] private Image CircleImgEndGame;
+        [SerializeField] private TextMeshProUGUI txtProgressEndGame;
 
         [Header("Tutorial")]
         [SerializeField] private GameObject _tutorialWrapper;
@@ -41,11 +44,12 @@ namespace GadGame.MiniGame
         [Header("Pool")]
         [SerializeField] private Pool<Item>[] _itemPools;
         [SerializeField] private Pool<Bomb>[] _bombPools;
-
+    
         private GameManager _gameManager;
         private Camera _camera;
         private float _spawnTimer;
         private Vector3 _preFramePosition;
+
         
         private void Start()
         {
@@ -142,6 +146,15 @@ namespace GadGame.MiniGame
             await _result.DOFade(1, 0.3f);
             await _resultScore.DOText(_gameManager.Score.ToString(), 1f, scrambleMode: ScrambleMode.Numerals);
         }
+
+        public void CountDownEndGame(float time){
+            var countDownTime = 10 - time;
+            Debug.Log("EndGame CountDown " + countDownTime.ToString());
+            var fill = countDownTime / 10;
+            CircleImgEndGame.fillAmount = fill;
+            txtProgressEndGame.text = Mathf.Ceil(countDownTime).ToString();
+        }
+        
 
         public void SetActive(bool value)
         {

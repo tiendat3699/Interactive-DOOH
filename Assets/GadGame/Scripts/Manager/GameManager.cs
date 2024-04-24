@@ -1,7 +1,7 @@
-
+using TMPro;
 using System;
-using GadGame.MiniGame;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace GadGame.Manager
 {
@@ -21,7 +21,7 @@ namespace GadGame.Manager
             if (_score <= 0) _score = 0;
             OnScoreUpdate?.Invoke(_score);
         }
-        
+
         public void EndGame()
         {
             OnEnd?.Invoke();

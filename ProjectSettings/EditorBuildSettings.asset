@@ -24,6 +24,9 @@ EditorBuildSettings:
     path: Assets/GadGame/Scenes/Game.unity
     guid: 79d05a23a33b9504c8ae8344c73927fe
   - enabled: 1
-    path: Assets/GadGame/Scenes/CTA.unity
+    path: Assets/GadGame/Scenes/CTA-female.unity
     guid: 46cab2f289b2fed4bb929899e3c5cf4b
+  - enabled: 1
+    path: Assets/GadGame/Scenes/CTA-male.unity
+    guid: 8d29c734954a82da488afe07def90528
   m_configObjects: {}
