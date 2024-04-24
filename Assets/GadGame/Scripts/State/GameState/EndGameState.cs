@@ -14,14 +14,16 @@ namespace GadGame.State.GameState
             Runner.SetActive(false);
             await UniTask.Delay(1000);
             Runner.ShowResult();
-            GameManager.Instance.CountDownEndGame();
-            await UniTask.Delay(5000);
-            GameManager.Instance.EndGame();
+            // await UniTask.Delay(5000);
+            // GameManager.Instance.EndGame();
         }
 
         public override void Update(float time)
         {
-            
+            Runner.CountDownEndGame(time);
+            if(time >= 10) {
+                GameManager.Instance.EndGame();
+            }
         }
 
         public override void Exit()

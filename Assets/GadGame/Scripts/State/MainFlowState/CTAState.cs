@@ -8,11 +8,17 @@ namespace GadGame.State.MainFlowState
     {
         public override void Enter()
         {
-            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTAScene.ScenePath);
+            if(UdpSocket.Instance.DataReceived.Gender <= 0.5f) {
+                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneMale.ScenePath);
+            } else {
+                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneFemale.ScenePath);
+            }
         }
 
         public override void Update(float time)
         {
+
+
             if (time >= 10)
             {
                 if(!UdpSocket.Instance.DataReceived.PassBy)
@@ -20,11 +26,7 @@ namespace GadGame.State.MainFlowState
                     Runner.SetState<IdleState>();
                     return;
                 }
-                // if(!UdpSocket.Instance.DataReceived.OnVision)
-                // {
-                //     Runner.SetState<PassByState>();
-                //     return;
-                // }
+
                 if(!UdpSocket.Instance.DataReceived.Engage)
                 {
                     Runner.SetState<ViewedState>();

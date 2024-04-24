@@ -14,11 +14,11 @@ namespace GadGame.State.GameState
 
         public override void Update(float time)
         {
+            Runner.PlayerControl();
             if(time < 1) return;
             _playingTime += Time.deltaTime;
             var remainingTime = Mathf.Clamp(Runner.GameTime - _playingTime, 0, Runner.GameTime);
             Runner.SetTextTime(remainingTime);
-            Runner.PlayerControl();
             Runner.SpawnRandomItem();
             if (_playingTime >= Runner.GameTime)
             {
