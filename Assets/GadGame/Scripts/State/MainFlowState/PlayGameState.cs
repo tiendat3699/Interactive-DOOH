@@ -60,14 +60,10 @@ namespace GadGame.State.MainFlowState
             _gameManager.Resume();
             if(!UdpSocket.Instance.DataReceived.PassBy)
             {
-                Runner.SetState<IdleState>();
+                Runner.SetState<PassByState>();
                 return;
             }
-            // if(!UdpSocket.Instance.DataReceived.OnVision)
-            // {
-            //     Runner.SetState<PassByState>();
-            //     return;
-            // }
+
             if(!UdpSocket.Instance.DataReceived.Engage)
             {
                 Runner.SetState<ViewedState>();

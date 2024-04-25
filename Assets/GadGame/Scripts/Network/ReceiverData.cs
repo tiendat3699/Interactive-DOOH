@@ -18,6 +18,6 @@ namespace GadGame.Network
         public float Gender;
         public int AgeMin;
         public int AgeMax;
-        public Vector2 PosPoint;
+        public Vector2[] PosPoints;
     }
 }

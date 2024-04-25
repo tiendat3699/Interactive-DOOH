@@ -66,8 +66,8 @@ namespace GadGame.State
 
             var newState = _states.FirstOrDefault(s => s is TSt);
             if(newState == null) return;
+            newState.Enter();
             ActiveState = newState;
-            ActiveState.Enter();
             _timer = 0;
         }
     }

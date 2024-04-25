@@ -1,6 +1,5 @@
 using GadGame.Manager;
 using GadGame.Network;
-using UnityEngine;
 
 namespace GadGame.State.MainFlowState
 {
@@ -13,7 +12,7 @@ namespace GadGame.State.MainFlowState
             } else if (UdpSocket.Instance.DataReceived.Gender >= 0.7f){
                 LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneFemale.ScenePath);
             } else {
-                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneBoth.ScenePath);
+                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.CTASceneFemale.ScenePath);
             }
         }
 
@@ -23,18 +22,8 @@ namespace GadGame.State.MainFlowState
 
             if (time >= 10)
             {
-                if(!UdpSocket.Instance.DataReceived.PassBy)
-                {
-                    Runner.SetState<IdleState>();
-                    return;
-                }
-
-                if(!UdpSocket.Instance.DataReceived.Engage)
-                {
-                    Runner.SetState<ViewedState>();
-                    return;
-                }
-                Runner.SetState<PassByState>();
+                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.PassByScene.ScenePath);
+                Runner.SetState<IdleState>();
             }
         }
 
