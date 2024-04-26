@@ -17,7 +17,7 @@ namespace GadGame.State
 #endif
         [SerializeField]
         private List<string> _availableStates;
-        private List<State<T>> _states;
+        private List<State<T>> _states = new();
         private float _timer;
         
 #if UNITY_EDITOR
@@ -36,8 +36,6 @@ namespace GadGame.State
         
         protected virtual void Awake()
         {
-            _states = new List<State<T>>();
-
             foreach (var stateName in _availableStates)
             {
                 var stateType = Assembly.GetExecutingAssembly().GetType(stateName);

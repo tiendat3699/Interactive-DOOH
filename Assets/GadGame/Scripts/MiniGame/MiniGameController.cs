@@ -105,11 +105,12 @@ namespace GadGame.MiniGame
             // var inputNormalize = new Vector2(inputData.x/ 200, inputData.y / 480);
 
             receivedData = UdpSocket.Instance.DataReceived.PosPoints;
-            Debug.Log(receivedData);
+            // Debug.Log(receivedData);
 
             for (int i = 0; i < Objects.Length; ++i)
             {
                 var inputNormalize = new Vector2((receivedData[i].x - 213.33f)/ 213.33f, receivedData[i].y / 480);
+                // Debug.Log(inputNormalize);
                 if (i == 0)
                 {
                     var input = new Vector2

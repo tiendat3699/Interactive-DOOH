@@ -1,3 +1,4 @@
+using GadGame.Manager;
 using GadGame.MiniGame;
 using UnityEngine;
 

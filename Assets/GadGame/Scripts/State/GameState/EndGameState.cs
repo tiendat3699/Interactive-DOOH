@@ -10,12 +10,9 @@ namespace GadGame.State.GameState
     {
         public override async void Enter()
         {
-            // Debug.Log("End Game");
             Runner.SetActive(false);
             await UniTask.Delay(1000);
             Runner.ShowResult();
-            // await UniTask.Delay(5000);
-            // GameManager.Instance.EndGame();
         }
 
         public override void Update(float time)

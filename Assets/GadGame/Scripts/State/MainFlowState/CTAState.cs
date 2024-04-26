@@ -16,14 +16,12 @@ namespace GadGame.State.MainFlowState
             }
         }
 
-        public override void Update(float time)
+        public async override void Update(float time)
         {
-
-
             if (time >= 10)
             {
-                LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.PassByScene.ScenePath);
                 Runner.SetState<IdleState>();
+                await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.PassByScene.ScenePath);
             }
         }
 

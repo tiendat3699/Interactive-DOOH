@@ -7,7 +7,6 @@ namespace GadGame.State.MainFlowState
 {
     public class IdleState : State<MainFlow>
     {
-
         public override void Enter()
         {
             PassByAnimation.Instance.Play(false);
@@ -16,7 +15,7 @@ namespace GadGame.State.MainFlowState
         
         public override void Update(float time)
         {
-            // if(time < 2) return;
+            if(time < 2) return;
 
             if (UdpSocket.Instance.DataReceived.PassBy)
             {
