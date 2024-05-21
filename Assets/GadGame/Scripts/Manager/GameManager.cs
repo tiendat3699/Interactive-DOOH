@@ -5,9 +5,10 @@ using UnityEngine.UI;
 
 namespace GadGame.Manager
 {
-    
+
     public class GameManager : Singleton.Singleton<GameManager>
     {
+        public bool Playing {get; private set;}
         private int _score;
         public int Score => _score;
         public event Action OnEnd;
@@ -22,6 +23,15 @@ namespace GadGame.Manager
             OnScoreUpdate?.Invoke(_score);
         }
 
+        public void StartPlay()
+        {
+            Playing = true;
+        }
+
+        public void EndPlay()
+        {
+            Playing = false;
+        }
         public void EndGame()
         {
             OnEnd?.Invoke();

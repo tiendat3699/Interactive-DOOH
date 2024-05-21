@@ -1,3 +1,4 @@
+using GadGame.Manager;
 using GadGame.MiniGame;
 using UnityEngine;
 
@@ -9,12 +10,11 @@ namespace GadGame.State.GameState
         {
             Debug.Log("Resume Game");
             Time.timeScale = 1;
-            Runner.SetState<PlayingGameState>();
         }
 
         public override void Update(float time)
         {
-            
+            Runner.SetState<PlayingGameState>();
         }
 
         public override void Exit()

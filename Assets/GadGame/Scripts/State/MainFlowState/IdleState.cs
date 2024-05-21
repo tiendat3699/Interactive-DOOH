@@ -1,14 +1,16 @@
+using System.Diagnostics;
 using GadGame.Manager;
 using GadGame.Network;
+using UnityEngine.SceneManagement;
 
 namespace GadGame.State.MainFlowState
 {
     public class IdleState : State<MainFlow>
     {
-        
         public override void Enter()
         {
-            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.IdleScene.ScenePath);
+            PassByAnimation.Instance.Play(false);
+            PassByAnimation.Instance.SetPlayVideo(true);
         }
         
         public override void Update(float time)
@@ -35,7 +37,7 @@ namespace GadGame.State.MainFlowState
 
         public override void Exit()
         {
-           
+            PassByAnimation.Instance.SetPlayVideo(false);
         }
     }
 }

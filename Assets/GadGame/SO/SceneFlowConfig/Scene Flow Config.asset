@@ -40,3 +40,7 @@ MonoBehaviour:
     _sceneAsset: {fileID: 102900000, guid: 46cab2f289b2fed4bb929899e3c5cf4b, type: 3}
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/CTA-female.unity
+  CTASceneBoth:
+    _sceneAsset: {fileID: 102900000, guid: 5881f8613541949ffbbc6a2d193f3704, type: 3}
+    _isDirty: 0
+    _scenePath: Assets/GadGame/Scenes/CTA-both.unity

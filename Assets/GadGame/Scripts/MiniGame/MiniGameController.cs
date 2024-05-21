@@ -11,6 +11,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using Newtonsoft.Json;
 
 namespace GadGame.MiniGame
 {
@@ -44,6 +45,9 @@ namespace GadGame.MiniGame
         [Header("Pool")]
         [SerializeField] private Pool<Item>[] _itemPools;
         [SerializeField] private Pool<Bomb>[] _bombPools;
+
+        private Vector2[] receivedData;
+        public Transform[] Objects;
     
         private GameManager _gameManager;
         private Camera _camera;
@@ -96,28 +100,50 @@ namespace GadGame.MiniGame
         public void PlayerControl()
         {
             //640x480;
-            var inputData = UdpSocket.Instance.DataReceived.PosPoint;
-            var inputNormalize = new Vector2((inputData.x - 213.33f)/ 213.33f, inputData.y / 480);
+            // string inputData = UdpSocket.Instance.DataReceived.PosPoints;
+            // var inputNormalize = new Vector2((inputData.x - 213.33f)/ 213.33f, inputData.y / 480);
             // var inputNormalize = new Vector2(inputData.x/ 200, inputData.y / 480);
-            var input = new Vector2
+
+            receivedData = UdpSocket.Instance.DataReceived.PosPoints;
+            // Debug.Log(receivedData);
+
+            for (int i = 0; i < Objects.Length; ++i)
             {
-                x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x),
-                y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y)
-            };
-            if (input != Vector2.zero)
-            {
-                var mousePos = input;
-                var pos = _camera.ScreenToWorldPoint(mousePos);
-                var currentPosition = _basket.Position;
-                pos.x *= -1;
-                pos.y = currentPosition.y;
-                pos.z = 0;
-                currentPosition= Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
-                currentPosition.x = Mathf.Clamp(currentPosition.x, -2.25f, 2.25f);
-                var dirMove = (_preFramePosition - currentPosition).normalized;
-                _basket.transform.DORotate(new Vector3(0, 0, 10 * dirMove.x), 0.2f);
-                _basket.Position = currentPosition;
+                var inputNormalize = new Vector2((receivedData[i].x - 213.33f)/ 213.33f, receivedData[i].y / 480);
+                // Debug.Log(inputNormalize);
+                if (i == 0)
+                {
+                    var input = new Vector2
+                    {
+                        x = Mathf.Lerp(0, _canvas.pixelRect.width, inputNormalize.x),
+                        y = -Mathf.Lerp(0, _canvas.pixelRect.height, inputNormalize.y)
+                    };
+                    if (input != Vector2.zero)
+                    {
+                        var mousePos = input;
+                        var pos = _camera.ScreenToWorldPoint(mousePos);
+                        var currentPosition = _basket.Position;
+                        pos.x *= -1;
+                        pos.y = currentPosition.y;
+                        pos.z = 0;
+                        currentPosition= Vector3.Lerp(currentPosition, pos, _lerp * Time.deltaTime);
+                        currentPosition.x = Mathf.Clamp(currentPosition.x, -2.25f, 2.25f);
+                        var dirMove = (_preFramePosition - currentPosition).normalized;
+                        _basket.transform.DORotate(new Vector3(0, 0, 10 * dirMove.x), 0.2f);
+                        _basket.Position = currentPosition;
+                    }
+                }
+
+                // var pos_pose = new Vector2();
+                // var x = Mathf.Clamp01(receivedData[i].x / 640);
+                // var y = Mathf.Clamp01(receivedData[i].y / 480);
+
+                // pos_pose.x = x;
+                // pos_pose.y = y;
+
+                // Objects[i].localPosition = pos_pose * -1;
             }
+            
         }
 
         public async void ShowTutorial()
@@ -149,7 +175,7 @@ namespace GadGame.MiniGame
 
         public void CountDownEndGame(float time){
             var countDownTime = 10 - time;
-            Debug.Log("EndGame CountDown " + countDownTime.ToString());
+            // Debug.Log("EndGame CountDown " + countDownTime.ToString());
             var fill = countDownTime / 10;
             CircleImgEndGame.fillAmount = fill;
             txtProgressEndGame.text = Mathf.Ceil(countDownTime).ToString();

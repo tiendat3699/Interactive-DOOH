@@ -19,8 +19,9 @@ namespace GadGame
             DontDestroyOnLoad(gameObject);
         }
 
-        private void Start()
+        private  async void Start()
         {
+            await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(SceneFlowConfig.PassByScene.ScenePath);
             SetState<IdleState>();
         }
 

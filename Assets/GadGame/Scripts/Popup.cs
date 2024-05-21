@@ -30,7 +30,7 @@ namespace GadGame
                     _duration -= 100;
                     if (_duration <= 0)
                     {
-                        Hide();
+                        Hide(true);
                     }
                 }
                 _onRun?.Invoke(_duration);
@@ -58,7 +58,7 @@ namespace GadGame
             PopupUpdate();
         }
 
-        public async void Hide()
+        public async void Hide(bool runComplete = false)
         {
             _active = false;
             _duration = 0;
@@ -67,7 +67,7 @@ namespace GadGame
             _canvasGroup.DOComplete();
             await _content.DOScale(Vector3.zero, 0.3f).SetUpdate(true);
             await _canvasGroup.DOFade(0, 0.3f).SetUpdate(true);
-            _onComplete?.Invoke();
+            if(runComplete) _onComplete?.Invoke();
             _onComplete = null;
             _onRun = null;
         }

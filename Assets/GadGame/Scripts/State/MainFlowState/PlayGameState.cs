@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using GadGame.Manager;
 using GadGame.Network;
 using UnityEngine;
@@ -21,26 +22,29 @@ namespace GadGame.State.MainFlowState
         public override void Update(float time)
         {
             UdpSocket.Instance.SendDataToPython("1");
-            // Debug.Log("Playing Game");
-            switch (_warned)
-            {
-                case false when !UdpSocket.Instance.DataReceived.Engage:
+            if(!GameManager.Instance.Playing) return;
+
+            if(!_warned && !UdpSocket.Instance.DataReceived.Engage) {
+                _leaveTimer += Time.deltaTime;
+                if ( _leaveTimer >= 5)
                 {
-                    _leaveTimer += Time.deltaTime;
-                    if ( _leaveTimer >= 5)
-                    {
-                        _warned = true;
-                        _leaveTimer = 0;
-                        _gameManager.Pause();
-                        PopupManager.Instance.Show("Where Are You?", 10).OnComplete(OnWaringComplete);
-                    }
-                    return;
+                    _warned = true;
+                    _leaveTimer = 0;
+                    _gameManager.Pause();
+                    PopupManager.Instance.Show("Where Are You?", 10).OnComplete(OnWaringComplete);
+                    CheckPlayBack();
                 }
-                case true when UdpSocket.Instance.DataReceived.Engage:
+            }
+        }   
+
+        public async void CheckPlayBack () {
+            while(_warned) {
+                if(UdpSocket.Instance.DataReceived.Engage) {
                     _warned = false;
                     _gameManager.Resume();
                     PopupManager.Instance.Hide();
-                    return;
+                }
+                await UniTask.Yield();
             }
         }
 
@@ -55,24 +59,22 @@ namespace GadGame.State.MainFlowState
             Runner.SetState<CTAState>();
         }
 
-        private void OnWaringComplete()
+        private async void OnWaringComplete()
         {
             _gameManager.Resume();
-            if(!UdpSocket.Instance.DataReceived.PassBy)
-            {
-                Runner.SetState<IdleState>();
-                return;
-            }
-            // if(!UdpSocket.Instance.DataReceived.OnVision)
+            await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.PassByScene.ScenePath);
+            Runner.SetState<IdleState>();
+            // if(!UdpSocket.Instance.DataReceived.PassBy)
             // {
             //     Runner.SetState<PassByState>();
             //     return;
             // }
-            if(!UdpSocket.Instance.DataReceived.Engage)
-            {
-                Runner.SetState<ViewedState>();
-                return;
-            }
+
+            // if(!UdpSocket.Instance.DataReceived.Engage)
+            // {
+            //     Runner.SetState<ViewedState>();
+            //     return;
+            // }
             // Runner.SetState<EngageState>();
         }
     }

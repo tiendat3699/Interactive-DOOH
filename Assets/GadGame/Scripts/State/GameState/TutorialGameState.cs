@@ -1,4 +1,5 @@
-﻿using GadGame.MiniGame;
+﻿using GadGame.Manager;
+using GadGame.MiniGame;
 
 namespace GadGame.State.GameState
 {
@@ -17,6 +18,10 @@ namespace GadGame.State.GameState
             if (time > 2)
             {
                 Runner.PlayerControl();
+            }
+
+            if(time >= 60) {
+                GameManager.Instance.EndGame();
             }
         }
 

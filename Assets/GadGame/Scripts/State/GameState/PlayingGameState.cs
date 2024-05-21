@@ -1,5 +1,6 @@
 using UnityEngine;
 using GadGame.MiniGame;
+using GadGame.Manager;
 
 namespace GadGame.State.GameState
 {
@@ -9,6 +10,7 @@ namespace GadGame.State.GameState
         
         public override void Enter()
         {
+            GameManager.Instance.StartPlay();
             Runner.SetActive(true);
         }
 
@@ -28,7 +30,7 @@ namespace GadGame.State.GameState
 
         public override void Exit()
         {
-            
+            GameManager.Instance.EndPlay();
         }
     }
 }
