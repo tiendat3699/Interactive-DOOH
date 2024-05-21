@@ -24,7 +24,7 @@ namespace GraphQlClient.Core
 
         public List<Query> subscriptions;
         
-        private string introspection;
+        [SerializeField] private string introspection;
         
         public Introspection.SchemaClass schemaClass;
 
@@ -101,13 +101,16 @@ namespace GraphQlClient.Core
             for (int i = 0; i < jsonChar.Length; i++){
                 if (jsonChar[i] == '\"'){
                     if (indexes.Count == 2)
-                        indexes = new List<int>();
+                        indexes.Clear();
                     indexes.Add(i);
                 }
 
-                if (jsonChar[i] == ':'){
-                    jsonChar[indexes[0]] = ' ';
-                    jsonChar[indexes[1]] = ' ';
+                if (indexes.Count == 2)
+                {
+                    if (jsonChar[i] == ':'){
+                        jsonChar[indexes[0]] = ' ';
+                        jsonChar[indexes[1]] = ' ';
+                    }
                 }
             }
 
@@ -133,7 +136,6 @@ namespace GraphQlClient.Core
                 return;
             EditorApplication.update -= HandleIntrospection;
             introspection = request.downloadHandler.text;
-            File.WriteAllText(Application.dataPath + $"{Path.DirectorySeparatorChar}{name}schema.txt",introspection);
             schemaClass = JsonConvert.DeserializeObject<Introspection.SchemaClass>(introspection);
             if (schemaClass.data.__schema.queryType != null)
                 queryEndpoint = schemaClass.data.__schema.queryType.name;
@@ -145,14 +147,12 @@ namespace GraphQlClient.Core
         }
 
         public void GetSchema(){
+            if (String.IsNullOrEmpty(introspection))
+            {
+                schemaClass = null;
+                return;
+            };
             if (schemaClass == null){
-                try{
-                    introspection = File.ReadAllText(Application.dataPath + $"{Path.DirectorySeparatorChar}{name}schema.txt");
-                }
-                catch{
-                    return;
-                }
-                
                 schemaClass = JsonConvert.DeserializeObject<Introspection.SchemaClass>(introspection);
                 if (schemaClass.data.__schema.queryType != null)
                     queryEndpoint = schemaClass.data.__schema.queryType.name;

@@ -15,9 +15,9 @@ namespace GraphQlClient.Editor
         public override void OnInspectorGUI(){
             GraphApi graph = (GraphApi) target;
             GUIStyle style = new GUIStyle{fontSize = 15, alignment = TextAnchor.MiddleCenter};
+            graph.GetSchema();
             EditorGUILayout.LabelField(graph.name, style);
             EditorGUILayout.Space();
-            graph.GetSchema();
             if (GUILayout.Button("Reset")){
                 graph.DeleteAllQueries();
             }
@@ -38,6 +38,7 @@ namespace GraphQlClient.Editor
             if (graph.schemaClass == null){
                 return;
             }
+
             EditorGUILayout.BeginHorizontal();
             if (GUILayout.Button("Create New Query")){
                 graph.CreateNewQuery();
@@ -45,10 +46,12 @@ namespace GraphQlClient.Editor
 
             if (GUILayout.Button("Create New Mutation")){
                 graph.CreateNewMutation();
+
             }
 
             if (GUILayout.Button("Create New Subscription")){
                 graph.CreateNewSubscription();
+
             }
 
             EditorGUILayout.EndHorizontal();
@@ -59,7 +62,7 @@ namespace GraphQlClient.Editor
             DisplayFields(graph, graph.queries, "Query");
             DisplayFields(graph, graph.mutations, "Mutation");
             DisplayFields(graph, graph.subscriptions, "Subscription");
-
+            
             EditorUtility.SetDirty(graph);
         }
 
@@ -75,7 +78,17 @@ namespace GraphQlClient.Editor
                     query.name = EditorGUILayout.TextField($"{type} Name", query.name);
                     string[] options = query.queryOptions.ToArray();
                     if (String.IsNullOrEmpty(query.returnType)){
-                        index = EditorGUILayout.Popup(type, index, options);
+                        EditorGUILayout.BeginHorizontal();
+                        EditorGUILayout.PrefixLabel(type);
+                        if (GUILayout.Button(queryList[i].queryString, EditorStyles.popup))
+                        {
+                            SearchOptionWindow.Show(Event.current.mousePosition, options, type, index =>
+                            {
+                                query.queryString = options[index];
+                                this.index = index;
+                            });
+                        }
+                        EditorGUILayout.EndHorizontal();
                         query.queryString = options[index];
                         EditorGUILayout.LabelField(options[index]);
                         if (GUILayout.Button($"Confirm {type}")){
@@ -120,7 +133,14 @@ namespace GraphQlClient.Editor
                         EditorGUILayout.BeginHorizontal();
                         GUIStyle fieldStyle = EditorStyles.popup;
                         fieldStyle.contentOffset = new Vector2(field.parentIndexes.Count * 20, 0);
-                        field.Index = EditorGUILayout.Popup(field.Index, fieldOptions, fieldStyle);
+                        field.Index = field.index;
+                        if (GUILayout.Button(fieldOptions[field.Index], EditorStyles.popup))
+                        {
+                            SearchOptionWindow.Show(Event.current.mousePosition, fieldOptions, "Field", index =>
+                            {
+                                field.Index = index;
+                            });
+                        }
                         GUI.color = Color.white;
                         field.CheckSubFields(graph.schemaClass);
                         if (field.hasSubField){

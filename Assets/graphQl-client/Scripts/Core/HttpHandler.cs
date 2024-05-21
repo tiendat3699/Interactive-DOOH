@@ -3,6 +3,7 @@ using System.Net.WebSockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using GraphQlClient.EventCallbacks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
