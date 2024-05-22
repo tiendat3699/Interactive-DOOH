@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccf793b7ca1cc645b9cd36d753b8e3c, type: 3}
   m_Name: Api Reference
   m_EditorClassIdentifier: 
-  url: http://192.168.1.126:50050/graphql
+  url: https://api.play4promo.online/graphql
   queries: []
   mutations:
   - name: LoginAsGameMachine
