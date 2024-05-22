@@ -27,7 +27,6 @@ namespace GraphQlClient.Core
 	            disposeUploadHandlerOnDispose = true
             };
             request.SetRequestHeader("Content-Type", "application/json");
-            request.SetRequestHeader("Accept-Encoding", "gzip, deflate");
             if (!String.IsNullOrEmpty(authToken)) 
                 request.SetRequestHeader("Authorization", "Bearer " + authToken);
             

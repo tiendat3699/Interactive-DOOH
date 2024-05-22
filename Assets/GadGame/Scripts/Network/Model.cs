@@ -2,19 +2,19 @@ using System;
 
 namespace GadGame.Network
 {
-    struct User
+    public struct User
     {
         public string id;
     }
     
-    struct LoginDetails
+    public struct LoginDetails
     {
         public string accessToken;
         public string refreshToken;
         public User user;
     }
 
-    struct Participant
+    public struct Participant
     {
         public string id;
         public int totalScore;
@@ -22,7 +22,7 @@ namespace GadGame.Network
         public int myRanke;
     }
 
-    struct GameSession
+    public struct GameSession
     {
         public string id;
         public DateTime startAt;
@@ -31,7 +31,7 @@ namespace GadGame.Network
         public Participant participant;
     }
 
-    struct Guest
+    public struct Guest
     {
         public string id;
         public string firstName;

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccf793b7ca1cc645b9cd36d753b8e3c, type: 3}
   m_Name: Api Reference
   m_EditorClassIdentifier: 
-  url: https://api.play4promo.online/graphql
+  url: http://192.168.1.126:50050/graphql
   queries: []
   mutations:
   - name: LoginAsGameMachine
@@ -281,8 +281,8 @@ MonoBehaviour:
   - name: SubmitGameSession
     type: 1
     query: "mutation SubmitGameSession{\n    submitGameSession(  input :{ playerId
-      :\"63e7cde8d9c01000\", promotionId :\"63c67c5434403000\", startAt :\"2024-05-22T14:29:49.1804663+07:00\",
-      endAt :\"2024-05-22T14:29:53.1833723+07:00\", score :1000} ){\n        startAt\n       
+      :null, promotionId :\"63c67c5434403000\", startAt :\"0001-01-01T00:00:00\",
+      endAt :\"2024-05-22T18:02:17.589268+07:00\", score :1000} ){\n        startAt\n       
       endAt\n        score\n    }\n}"
     queryString: submitGameSession
     returnType: GameSession
@@ -392,8 +392,8 @@ MonoBehaviour:
   - name: GuestUpdatedSubscription
     type: 2
     query: "subscription GuestUpdatedSubscription{\n    guestUpdatedSubscription( 
-      guestId :\"63e7cde8d9c01000\" ){\n        firstName\n        lastName\n       
-      phone\n        email\n    }\n}"
+      guestId :null ){\n        firstName\n        lastName\n        phone\n       
+      email\n    }\n}"
     queryString: guestUpdatedSubscription
     returnType: Guest
     queryOptions:

@@ -33,18 +33,7 @@ namespace GadGame.Network
         private string _userAccessToken;
         private string _machineAccessToken;
 
-        public Action<OnSubscriptionDataReceived> OnGuestUpdatedSubscription;
-
-        protected override async void Awake()
-        {
-            base.Awake();
-            await LoginMachine();
-            await CreateGuest();
-            await JoinPromotion();
-            await UniTask.Delay(5000);
-            await SubmitGameSession(1000);
-            GetQrLink();
-        }
+        public Action<Guest> OnGuestUpdatedSubscription;
 
         private void OnEnable()
         {
@@ -58,8 +47,10 @@ namespace GadGame.Network
 
         private void OnGuestUpdated(OnSubscriptionDataReceived dataReceived)
         {
+            var Jobj = JObject.Parse(dataReceived.data);
             Debug.Log(dataReceived.data);
-            OnGuestUpdatedSubscription?.Invoke(dataReceived);
+            var data = Jobj["payload"]!["data"]!["guestUpdatedSubscription"]!.ToObject<Guest>();
+            OnGuestUpdatedSubscription?.Invoke(data);
         }
 
         private DataReceive GetData(string data)
@@ -68,7 +59,7 @@ namespace GadGame.Network
             return JsonConvert.DeserializeObject<DataReceive>(json);
         }
 
-        private async Task<bool> LoginMachine()
+        public async Task<bool> LoginMachine()
         {
             var query = _graphApi.GetQueryByName("LoginAsGameMachine", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
@@ -162,7 +153,7 @@ namespace GadGame.Network
                 }
             });
             
-            _graphApi.SetAuthToken(_userAccessToken);
+            _graphApi.SetAuthToken(_machineAccessToken);
             var request = await _graphApi.Post(query);
             if (request.result == UnityWebRequest.Result.Success)
             {
@@ -176,9 +167,9 @@ namespace GadGame.Network
             return false;
         }
 
-        public async void GetQrLink()
+        public async Task<Texture2D> GetQrLink()
         {
-            await GuestUpdatedSubscription();
+            return await GuestUpdatedSubscription();
         }
 
         private async Task<Texture2D> GuestUpdatedSubscription()
