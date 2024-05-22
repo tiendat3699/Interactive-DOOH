@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e4d60f91c79e44408084c96be88f2f1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _port: 3000
+  _ip: 192.168.1.122
+  _receivePort: 8000
+  _sendPort: 8001
   _dataReceived:
     PassBy: 0
     OnVision: 0
@@ -53,3 +55,4 @@ MonoBehaviour:
     Gender: 0
     AgeMin: 0
     AgeMax: 0
+    PosPoints: []

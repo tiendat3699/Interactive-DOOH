@@ -75,13 +75,13 @@ namespace GraphQlClient.Core
             return await Post(query);
         }
 
-        public async Task<ClientWebSocket> Subscribe(Query query, string socketId = "1", string protocol = "graphql-ws"){
+        public async Task<ClientWebSocket> Subscribe(Query query, string socketId = "1", string protocol = "graphql-transport-ws"){
             if (String.IsNullOrEmpty(query.query))
                 query.CompleteQuery();
             return await HttpHandler.WebsocketConnect(url, query.query, authToken, socketId, protocol);
         }
 
-        public async Task<ClientWebSocket> Subscribe(string queryName, Query.Type type, string socketId = "1", string protocol = "graphql-ws"){
+        public async Task<ClientWebSocket> Subscribe(string queryName, Query.Type type, string socketId = "1", string protocol = "graphql-transport-ws"){
             Query query = GetQueryByName(queryName, type);
             return await Subscribe(query, socketId, protocol);
         }

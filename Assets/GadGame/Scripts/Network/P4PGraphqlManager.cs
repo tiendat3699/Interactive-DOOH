@@ -1,4 +1,5 @@
 using System;
+using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GadGame.Singleton;
@@ -9,24 +10,28 @@ using Newtonsoft.Json.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Networking;
+using ZXing;
+using ZXing.QrCode;
 
 namespace GadGame.Network
 {
 
-    class DataReceive
+    struct DataReceive
     {
-        public JObject[] errors = null;
-        public JObject data = null;
+        public JObject[] errors;
+        public JObject data;
     }
-    
+
     public class P4PGraphqlManager : PersistentSingleton<P4PGraphqlManager>
     {
-        [SerializeField] private GraphApi _p4pGraph;
+        [SerializeField] private GraphApi _graphApi;
         [SerializeField] private string _machineMac;
         [SerializeField] private string _promotionId;
 
         private DateTime _startTime;
-        [ShowInInspector, HideInEditorMode] private string _userId;
+        private string _userId;
+        private string _userAccessToken;
+        private string _machineAccessToken;
 
         public Action<OnSubscriptionDataReceived> OnGuestUpdatedSubscription;
 
@@ -53,6 +58,7 @@ namespace GadGame.Network
 
         private void OnGuestUpdated(OnSubscriptionDataReceived dataReceived)
         {
+            Debug.Log(dataReceived.data);
             OnGuestUpdatedSubscription?.Invoke(dataReceived);
         }
 
@@ -64,7 +70,7 @@ namespace GadGame.Network
 
         private async Task<bool> LoginMachine()
         {
-            var query = _p4pGraph.GetQueryByName("LoginAsGameMachine", GraphApi.Query.Type.Mutation);
+            var query = _graphApi.GetQueryByName("LoginAsGameMachine", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
             {
                 input = new
@@ -73,13 +79,14 @@ namespace GadGame.Network
                     password = "Abc@123"
                 }
             });
-            var request = await _p4pGraph.Post(query);
-            Debug.Log("LoginAsGameMachine " + request.result);
+            var request = await _graphApi.Post(query);
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var receive = GetData(request.downloadHandler.text);
-                if (receive.errors != null)
+                if (receive.data != null)
                 {
+                    var loginDetail = receive.data["loginAsGameMachine"]!.ToObject<LoginDetails>();
+                    _machineAccessToken = loginDetail.accessToken;
                     return true;
                 }
             }
@@ -89,7 +96,7 @@ namespace GadGame.Network
 
         public async Task<bool> CreateGuest()
         {
-            var query = _p4pGraph.GetQueryByName("CreateGuest", GraphApi.Query.Type.Mutation);
+            var query = _graphApi.GetQueryByName("CreateGuest", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
             {
                 input = new
@@ -97,16 +104,15 @@ namespace GadGame.Network
                     password = "Abc@123"
                 }
             });
-            var request = await _p4pGraph.Post(query);
-            Debug.Log("CreateGuest " + request.result);
+            var request = await _graphApi.Post(query);
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var receive = GetData(request.downloadHandler.text);
                 if (receive.data != null)
                 {
-                    var guest = receive.data["createGuest"];
-                    _p4pGraph.SetAuthToken(guest?["accessToken"]?.ToString());
-                    _userId = guest?["user"]?["id"]?.ToString();
+                    var loginDetails = receive.data["createGuest"]!.ToObject<LoginDetails>();
+                    _userId = loginDetails.user.id;
+                    _userAccessToken = loginDetails.accessToken;
                     return true;
                 }
             }
@@ -116,7 +122,7 @@ namespace GadGame.Network
 
         public async Task<bool> JoinPromotion()
         {
-            var query = _p4pGraph.GetQueryByName("JoinPromotion", GraphApi.Query.Type.Mutation);
+            var query = _graphApi.GetQueryByName("JoinPromotion", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
             {
                 input = new
@@ -124,8 +130,9 @@ namespace GadGame.Network
                     promotionId = _promotionId
                 }
             });
-            var request = await _p4pGraph.Post(query);
-            Debug.Log("JoinPromotion " + request.result);
+            
+            _graphApi.SetAuthToken(_userAccessToken);
+            var request = await _graphApi.Post(query);
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var receive = GetData(request.downloadHandler.text);
@@ -142,7 +149,7 @@ namespace GadGame.Network
         public async Task<bool> SubmitGameSession(int gameScore)
         {
             var endTime = DateTime.Now.AddSeconds(-1);
-            var query = _p4pGraph.GetQueryByName("SubmitGameSession", GraphApi.Query.Type.Mutation);
+            var query = _graphApi.GetQueryByName("SubmitGameSession", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
             {
                 input = new
@@ -154,8 +161,9 @@ namespace GadGame.Network
                     score = gameScore,
                 }
             });
-            var request = await _p4pGraph.Post(query);
-            Debug.Log("Submit Game Session " + request.result);
+            
+            _graphApi.SetAuthToken(_userAccessToken);
+            var request = await _graphApi.Post(query);
             if (request.result == UnityWebRequest.Result.Success)
             {
                 var receive = GetData(request.downloadHandler.text);
@@ -173,17 +181,54 @@ namespace GadGame.Network
             await GuestUpdatedSubscription();
         }
 
-        private async Task GuestUpdatedSubscription()
+        private async Task<Texture2D> GuestUpdatedSubscription()
         {
-            var query = _p4pGraph.GetQueryByName("GuestUpdatedSubscription", GraphApi.Query.Type.Subscription);
+            var query = _graphApi.GetQueryByName("GuestUpdatedSubscription", GraphApi.Query.Type.Subscription);
             query.SetArgs(new
             {
-                input = new
-                {
-                    guestId = _userId,
-                }
+                guestId = _userId,
             });
-            await _p4pGraph.Subscribe(query);
+            _graphApi.SetAuthToken(_machineAccessToken);
+            var socket = await _graphApi.Subscribe(query);
+            if (socket.State == WebSocketState.Open)
+            {
+                var link = $"https://play4promo.online/brands/{_promotionId}/scan-qr?token={_userAccessToken}";
+                Debug.Log(link);
+                return EncodeTextToQrCode(link);
+            }
+
+            return null;
+        }
+        
+        private Color32 [] Encode(string textForEncoding, int width, int height)
+        {
+            BarcodeWriter writer = new BarcodeWriter
+            {
+                Format = BarcodeFormat.QR_CODE,
+                Options = new QrCodeEncodingOptions
+                {
+                    Height = height,
+                    Width = width
+                }
+            };
+            return writer.Write(textForEncoding);
+        }
+        
+
+        private Texture2D EncodeTextToQrCode(string input, int width = 256, int height = 256)
+        {
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                Debug.Log("You should write something");
+                return null;
+            }
+            
+            var texture = new Texture2D(width, height);
+            Color32 [] convertPixelToTexture = Encode(input, texture.width, texture.height);
+            texture.SetPixels32(convertPixelToTexture);
+            texture.Apply();
+
+            return texture;
         }
     }
 }

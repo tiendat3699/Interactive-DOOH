@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ccf793b7ca1cc645b9cd36d753b8e3c, type: 3}
   m_Name: Api Reference
   m_EditorClassIdentifier: 
-  url: https://api.play4promo.online/graphql
+  url: http://192.168.1.126:50050/graphql
   queries: []
   mutations:
   - name: LoginAsGameMachine
@@ -195,7 +195,7 @@ MonoBehaviour:
     isComplete: 1
   - name: JoinPromotion
     type: 1
-    query: "mutation JoinPromotion{\n    joinPromotion(  input :{ promotionId :\"63d879e156403000\"}
+    query: "mutation JoinPromotion{\n    joinPromotion(  input :{ promotionId :\"63c67c5434403000\"}
       ){\n        id\n        totalScore\n    }\n}"
     queryString: joinPromotion
     returnType: Participant
@@ -281,8 +281,8 @@ MonoBehaviour:
   - name: SubmitGameSession
     type: 1
     query: "mutation SubmitGameSession{\n    submitGameSession(  input :{ playerId
-      :\"63e71a16b6401000\", promotionId :\"63d879e156403000\", startAt :\"2024-05-22T01:27:17.4750128+07:00\",
-      endAt :\"2024-05-22T01:27:29.5938457+07:00\", score :1000} ){\n        startAt\n       
+      :\"63e7cde8d9c01000\", promotionId :\"63c67c5434403000\", startAt :\"2024-05-22T14:29:49.1804663+07:00\",
+      endAt :\"2024-05-22T14:29:53.1833723+07:00\", score :1000} ){\n        startAt\n       
       endAt\n        score\n    }\n}"
     queryString: submitGameSession
     returnType: GameSession
@@ -392,7 +392,7 @@ MonoBehaviour:
   - name: GuestUpdatedSubscription
     type: 2
     query: "subscription GuestUpdatedSubscription{\n    guestUpdatedSubscription( 
-      input :{ guestId :\"63e71a16b6401000\"} ){\n        firstName\n        lastName\n       
+      guestId :\"63e7cde8d9c01000\" ){\n        firstName\n        lastName\n       
       phone\n        email\n    }\n}"
     queryString: guestUpdatedSubscription
     returnType: Guest
