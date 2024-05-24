@@ -105,12 +105,10 @@ namespace GadGame.MiniGame
             // var inputNormalize = new Vector2(inputData.x/ 200, inputData.y / 480);
 
             receivedData = UdpSocket.Instance.DataReceived.PosPoints;
-            // Debug.Log(receivedData);
 
-            for (int i = 0; i < Objects.Length; ++i)
+            for (int i = 0; i < Objects.Length; i++)
             {
                 var inputNormalize = new Vector2((receivedData[i].x - 213.33f)/ 213.33f, receivedData[i].y / 480);
-                // Debug.Log(inputNormalize);
                 if (i == 0)
                 {
                     var input = new Vector2
@@ -171,6 +169,7 @@ namespace GadGame.MiniGame
         {
             await _result.DOFade(1, 0.3f);
             await _resultScore.DOText(_gameManager.Score.ToString(), 1f, scrambleMode: ScrambleMode.Numerals);
+            await P4PGraphqlManager.Instance.SubmitGameSession(1000);
         }
 
         public void CountDownEndGame(float time){

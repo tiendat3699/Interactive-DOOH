@@ -15,8 +15,8 @@ namespace GadGame.Editor.Window
         protected override OdinMenuTree BuildMenuTree()
         {
             var tree = new OdinMenuTree();
-            tree.Add("Scene Flow", SceneFlowConfig.GetOrCreateSettings());
-            tree.Add("Sound", AudioConfig.GetOrCreateSettings());
+            tree.Add("Scene Flow", ConfigHelper.GetOrCreateConfig<SceneFlowConfig>());
+            tree.Add("Sound", ConfigHelper.GetOrCreateConfig<AudioConfig>());
 
             return tree;
         }

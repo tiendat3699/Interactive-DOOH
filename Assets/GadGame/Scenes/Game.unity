@@ -7853,7 +7853,7 @@ MonoBehaviour:
   - GadGame.State.GameState.ResumeGameState
   - GadGame.State.GameState.PlayingGameState
   - GadGame.State.GameState.EndGameState
-  GameTime: 20
+  GameTime: 5
   _basket: {fileID: 1254852293}
   _lerp: 10
   _spawnTime: 0.2

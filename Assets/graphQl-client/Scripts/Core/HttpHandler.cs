@@ -34,7 +34,7 @@ namespace GraphQlClient.Core
             requestBegin.FireEvent();
             
             try{
-	            request.SendWebRequest();
+	            await request.SendWebRequest();
                 while (!request.isDone)
                 {
 	                await Task.Yield();
@@ -89,7 +89,7 @@ namespace GraphQlClient.Core
 				await WebsocketSubscribe(cws, id, details);
 			}
 			catch (Exception e){
-				Debug.Log("woe " + e.Message);
+				Debug.Log("Error: " + e.Message);
 			}
 
 			return cws;

@@ -4,6 +4,8 @@ using GadGame.SO;
 using GadGame.State;
 using GadGame.State.MainFlowState;
 using Sirenix.OdinInspector;
+using GadGame.Network;
+
 
 namespace GadGame
 {
@@ -13,10 +15,11 @@ namespace GadGame
         public event Action<float> OnReadyCountDown; 
         public event Action<bool> OnReady; 
 
-        protected override void Awake()
+        protected override async void Awake()
         {
             base.Awake();
             DontDestroyOnLoad(gameObject);
+            await P4PGraphqlManager.Instance.LoginMachine();
         }
 
         private  async void Start()

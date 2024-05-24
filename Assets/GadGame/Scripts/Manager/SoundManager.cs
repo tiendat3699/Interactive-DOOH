@@ -14,7 +14,7 @@ namespace GadGame.Manager
         protected override void Awake()
         {
             base.Awake();
-            _audioConfig = AudioConfig.FindSettings();
+            _audioConfig = ConfigHelper.GetConfig<AudioConfig>();
             _musicAudioSource = gameObject.AddComponent<AudioSource>();
             _musicAudioSource.playOnAwake = false;
             _pool = new Pool<AudioObject>(_audioConfig.AudioObjectPrefab, 10, 1000);

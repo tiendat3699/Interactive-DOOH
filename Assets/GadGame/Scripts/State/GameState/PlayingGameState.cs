@@ -1,6 +1,7 @@
 using UnityEngine;
 using GadGame.MiniGame;
 using GadGame.Manager;
+using GadGame.Network;
 
 namespace GadGame.State.GameState
 {
@@ -8,8 +9,10 @@ namespace GadGame.State.GameState
     {
         private float _playingTime;
         
-        public override void Enter()
+        public override async void Enter()
         {
+            await P4PGraphqlManager.Instance.CreateGuest();
+            await P4PGraphqlManager.Instance.JoinPromotion();
             GameManager.Instance.StartPlay();
             Runner.SetActive(true);
         }
@@ -24,6 +27,7 @@ namespace GadGame.State.GameState
             Runner.SpawnRandomItem();
             if (_playingTime >= Runner.GameTime)
             {
+                UdpSocket.Instance.SendDataToPython("Done");  
                 Runner.SetState<EndGameState>();
             }
         }

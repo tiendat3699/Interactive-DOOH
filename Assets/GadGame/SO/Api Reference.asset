@@ -21,7 +21,7 @@ MonoBehaviour:
       :\"D85ED3741515\", password :\"Abc@123\"} ){\n        accessToken\n       
       refreshToken\n    }\n}"
     queryString: loginAsGameMachine
-    returnType: LoginDetails
+    returnType: Game
     queryOptions:
     - createGame
     - createGuest
@@ -281,8 +281,8 @@ MonoBehaviour:
   - name: SubmitGameSession
     type: 1
     query: "mutation SubmitGameSession{\n    submitGameSession(  input :{ playerId
-      :null, promotionId :\"63c67c5434403000\", startAt :\"0001-01-01T00:00:00\",
-      endAt :\"2024-05-22T18:02:17.589268+07:00\", score :1000} ){\n        startAt\n       
+      :\"63e929e9b3c01000\", promotionId :\"63c67c5434403000\", startAt :\"2024-05-23T15:53:22.407196+07:00\",
+      endAt :\"2024-05-23T15:53:29.062723+07:00\", score :1000} ){\n        startAt\n       
       endAt\n        score\n    }\n}"
     queryString: submitGameSession
     returnType: GameSession
@@ -392,8 +392,8 @@ MonoBehaviour:
   - name: GuestUpdatedSubscription
     type: 2
     query: "subscription GuestUpdatedSubscription{\n    guestUpdatedSubscription( 
-      guestId :null ){\n        firstName\n        lastName\n        phone\n       
-      email\n    }\n}"
+      guestId :\"63e929e9b3c01000\" ){\n        firstName\n        lastName\n       
+      phone\n        email\n    }\n}"
     queryString: guestUpdatedSubscription
     returnType: Guest
     queryOptions:

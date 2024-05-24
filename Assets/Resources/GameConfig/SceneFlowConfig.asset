@@ -10,8 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 400a475445924f5e97894558a84d8295, type: 3}
-  m_Name: Scene Flow Config
+  m_Name: SceneFlowConfig
   m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   IdleScene:
     _sceneAsset: {fileID: 102900000, guid: 632910d4b45f36a478868b8cdc4b3ec2, type: 3}
     _isDirty: 0
@@ -37,10 +46,10 @@ MonoBehaviour:
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/CTA-male.unity
   CTASceneFemale:
-    _sceneAsset: {fileID: 102900000, guid: 46cab2f289b2fed4bb929899e3c5cf4b, type: 3}
+    _sceneAsset: {fileID: 102900000, guid: 48bbe95e3cc2b504492831147cd12207, type: 3}
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/CTA-female.unity
-  CTASceneBoth:
-    _sceneAsset: {fileID: 102900000, guid: 5881f8613541949ffbbc6a2d193f3704, type: 3}
+  TMale:
+    _sceneAsset: {fileID: 102900000, guid: a703ee5d23b7084b8abda00394078d18, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/CTA-both.unity
+    _scenePath: Assets/GadGame/Scenes/T-male.unity

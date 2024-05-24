@@ -3,6 +3,7 @@ using GadGame.Manager;
 using GadGame.MiniGame;
 using UnityEngine;
 using TMPro;
+using GadGame.Network;
 
 namespace GadGame.State.GameState
 {

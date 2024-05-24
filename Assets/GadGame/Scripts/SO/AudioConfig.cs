@@ -10,7 +10,7 @@ using UnityEditor;
 namespace GadGame.SO
 {
     [CreateAssetMenu]
-    public class AudioConfig : SerializedScriptableObject
+    public class AudioConfig : Config
     {
         public AudioObject AudioObjectPrefab;
         
@@ -20,6 +20,8 @@ namespace GadGame.SO
         
         public Dictionary<string, AudioClip> Musics = new();
         public Dictionary<string, AudioClip> Sounds = new();
+
+        #if UNITY_EDITOR
         
         [Button(ButtonSizes.Gigantic), GUIColor(0, 1, 0)]
         private void GenerateAudioDefine()
@@ -46,37 +48,6 @@ namespace GadGame.SO
 
             AssetDatabase.Refresh (ImportAssetOptions.ForceUpdate);
         }
-
-#if UNITY_EDITOR
-        public static AudioConfig FindSettings()
-        {
-            var guids = AssetDatabase.FindAssets($"t:{nameof(AudioConfig)}");
-            if (guids.Length > 1) Debug.LogWarning("Found multiple settings files, using the first.");
-
-            switch (guids.Length)
-            {
-                case 0:
-                    return null;
-                default:
-                    var path = AssetDatabase.GUIDToAssetPath(guids[0]);
-                    return AssetDatabase.LoadAssetAtPath<AudioConfig>(path);
-            }
-        }
-       
-        public static AudioConfig GetOrCreateSettings()
-        {
-            var settings = FindSettings();
-            if (settings == null)
-            {
-                settings = CreateInstance<AudioConfig>();
-                string path = "Assets/GadGame/SO/SoundConfig";
-                if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-                AssetDatabase.CreateAsset(settings, $"{path}/Sound Config.asset");
-                AssetDatabase.SaveAssets();
-            }
-
-            return settings;
-        }
-#endif
+        #endif
     }
 }

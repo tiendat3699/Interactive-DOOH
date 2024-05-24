@@ -28,11 +28,6 @@ namespace GadGame.State.MainFlowState
                 Runner.SetState<EngageState>();
                 return;
             }
-            // if (UdpSocket.Instance.DataReceived.OnVision)
-            // {
-            //     Runner.SetState<ViewedState>();
-            //     return;
-            // }
         }
 
         public override void Exit()

@@ -48,7 +48,7 @@ namespace GadGame.Network
         private void OnGuestUpdated(OnSubscriptionDataReceived dataReceived)
         {
             var Jobj = JObject.Parse(dataReceived.data);
-            Debug.Log(dataReceived.data);
+            Debug.Log(Jobj);
             var data = Jobj["payload"]!["data"]!["guestUpdatedSubscription"]!.ToObject<Guest>();
             OnGuestUpdatedSubscription?.Invoke(data);
         }
