@@ -36,7 +36,8 @@ namespace GadGame.State.MainFlowState
             if (_readyTimer <= 0)
             {
                 _readyTimer = 0;
-                Runner.SetState<PlayGameState>();
+                Runner.EngageReady.Raise();
+                // Runner.SetState<PlayGameState>();
             }
             if (time >= 2)
             {

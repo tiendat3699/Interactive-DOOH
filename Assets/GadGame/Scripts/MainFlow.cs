@@ -13,6 +13,7 @@ namespace GadGame
     {
         public SceneFlowConfig SceneFlowConfig;
         public VoidEvent ScanSuccess;
+        public VoidEvent EngageReady;
         public BoolEvent PlayPassByAnim;
         public BoolEvent PlayVideo;
         public FloatEvent ReadyCountDown;

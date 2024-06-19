@@ -43,12 +43,11 @@ namespace GadGame.State.MainFlowState
 
         private async void SetPlayVideo(bool value){
             if(value) {
-                while (videoPlayer.targetCameraAlpha < 1) 
+                while (videoPlayer.targetCameraAlpha < 1)
                 {
                     videoPlayer.targetCameraAlpha += Time.deltaTime * 3;
                     await UniTask.Yield();
                 }
-                
                 videoPlayer.targetCameraAlpha = 1;
             } else {
                 while (videoPlayer.targetCameraAlpha > 0) 
@@ -56,7 +55,6 @@ namespace GadGame.State.MainFlowState
                     videoPlayer.targetCameraAlpha -= Time.deltaTime * 3;
                     await UniTask.Yield();
                 }
-
                 videoPlayer.targetCameraAlpha = 0;
             }
         }

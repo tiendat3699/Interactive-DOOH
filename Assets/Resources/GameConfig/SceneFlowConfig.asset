@@ -26,9 +26,9 @@ MonoBehaviour:
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/Idle.unity
   PassByScene:
-    _sceneAsset: {fileID: 102900000, guid: c9e32be920223db4eb26536f66c3d91a, type: 3}
+    _sceneAsset: {fileID: 102900000, guid: b0e1447ef6499864c9eed0c52d576102, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/PassBy.unity
+    _scenePath: Assets/GadGame/Scenes/PassBy_coffee.unity
   EndGageScene:
     _sceneAsset: {fileID: 102900000, guid: cdaaa0ee6b3b73b4b9f984ca2bf1d535, type: 3}
     _isDirty: 0

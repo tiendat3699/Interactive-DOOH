@@ -50,4 +50,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GadGame/Scenes/CTA-female.unity
     guid: 4ecb64fb1fa29a71fa49c5a3bc530eb7
+  - enabled: 1
+    path: Assets/GadGame/Scenes/PassBy_coffee.unity
+    guid: b0e1447ef6499864c9eed0c52d576102
   m_configObjects: {}
