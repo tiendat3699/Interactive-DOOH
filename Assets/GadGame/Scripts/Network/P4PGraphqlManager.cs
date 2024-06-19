@@ -25,7 +25,7 @@ namespace GadGame.Network
     public class P4PGraphqlManager : PersistentSingleton<P4PGraphqlManager>
     {
         [SerializeField] private GraphApi _graphApi;
-        [SerializeField] private string _machineMac;
+        // [SerializeField] private string _machineMac;
         [SerializeField] private string _promotionId;
 
         private DateTime _startTime;
@@ -59,7 +59,7 @@ namespace GadGame.Network
             return JsonConvert.DeserializeObject<DataReceive>(json);
         }
 
-        public async Task<bool> LoginMachine()
+        public async Task<bool> LoginMachine(string _machineMac)
         {
             var query = _graphApi.GetQueryByName("LoginAsGameMachine", GraphApi.Query.Type.Mutation);
             query.SetArgs(new
@@ -67,7 +67,7 @@ namespace GadGame.Network
                 input = new
                 {
                     macAddress = _machineMac,
-                    password = "Abc@123"
+                    password = "Sangta@123"
                 }
             });
             var request = await _graphApi.Post(query);
@@ -92,7 +92,7 @@ namespace GadGame.Network
             {
                 input = new
                 {
-                    password = "Abc@123"
+                    password = "Sangta@123"
                 }
             });
             var request = await _graphApi.Post(query);

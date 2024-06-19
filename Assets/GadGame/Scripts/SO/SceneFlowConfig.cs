@@ -11,11 +11,10 @@ namespace GadGame.SO
     {
         public SceneReference IdleScene;
         public SceneReference PassByScene;
-        public SceneReference ViewedScene;
         public SceneReference EndGageScene;
-        public SceneReference GameScene;
+        public SceneReference GameMaleScene;
+        public SceneReference GameFemaleScene;
         public SceneReference CTASceneMale;
         public SceneReference CTASceneFemale;
-        public SceneReference TMale;
     }
 }

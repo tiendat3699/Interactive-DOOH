@@ -1,14 +1,13 @@
-using System.Diagnostics;
-using GadGame.Manager;
+using Cysharp.Threading.Tasks;
 using GadGame.Network;
-using UnityEngine.SceneManagement;
 
 namespace GadGame.State.MainFlowState
 {
     public class IdleState : State<MainFlow>
     {
-        public override void Enter()
+        public override async void Enter()
         {
+            await UniTask.Delay(1000);
             PassByAnimation.Instance.Play(false);
             PassByAnimation.Instance.SetPlayVideo(true);
         }

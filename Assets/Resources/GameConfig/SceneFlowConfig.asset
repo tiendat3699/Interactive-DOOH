@@ -29,27 +29,23 @@ MonoBehaviour:
     _sceneAsset: {fileID: 102900000, guid: c9e32be920223db4eb26536f66c3d91a, type: 3}
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/PassBy.unity
-  ViewedScene:
-    _sceneAsset: {fileID: 102900000, guid: f55162ea91535d84290df33ce2b3c2fb, type: 3}
-    _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Viewer.unity
   EndGageScene:
     _sceneAsset: {fileID: 102900000, guid: cdaaa0ee6b3b73b4b9f984ca2bf1d535, type: 3}
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/Engage.unity
-  GameScene:
+  GameMaleScene:
     _sceneAsset: {fileID: 102900000, guid: 79d05a23a33b9504c8ae8344c73927fe, type: 3}
     _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/Game.unity
+    _scenePath: Assets/GadGame/Scenes/GameMale.unity
+  GameFemaleScene:
+    _sceneAsset: {fileID: 102900000, guid: c1c082e6ade6e488fa6c819f69603daa, type: 3}
+    _isDirty: 0
+    _scenePath: Assets/GadGame/Scenes/GameFemale.unity
   CTASceneMale:
     _sceneAsset: {fileID: 102900000, guid: 8d29c734954a82da488afe07def90528, type: 3}
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/CTA-male.unity
   CTASceneFemale:
-    _sceneAsset: {fileID: 102900000, guid: 48bbe95e3cc2b504492831147cd12207, type: 3}
+    _sceneAsset: {fileID: 102900000, guid: 4ecb64fb1fa29a71fa49c5a3bc530eb7, type: 3}
     _isDirty: 0
     _scenePath: Assets/GadGame/Scenes/CTA-female.unity
-  TMale:
-    _sceneAsset: {fileID: 102900000, guid: a703ee5d23b7084b8abda00394078d18, type: 3}
-    _isDirty: 0
-    _scenePath: Assets/GadGame/Scenes/T-male.unity

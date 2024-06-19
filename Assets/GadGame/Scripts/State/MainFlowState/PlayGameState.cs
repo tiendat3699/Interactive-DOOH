@@ -13,7 +13,13 @@ namespace GadGame.State.MainFlowState
         
         public override async void Enter()
         {
-            await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameScene.ScenePath);
+            if(UdpSocket.Instance.DataReceived.Gender < 0.5f)
+            {
+                await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameMaleScene.ScenePath);
+            } else 
+            {
+                await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.GameFemaleScene.ScenePath);
+            }
             _gameManager = GameManager.Instance;
             _gameManager.OnEnd += OnEndGame;
             _leaveTimer = 0; 
@@ -35,7 +41,7 @@ namespace GadGame.State.MainFlowState
                     CheckPlayBack();
                 }
             }
-        }   
+        }
 
         public async void CheckPlayBack () {
             while(_warned) {

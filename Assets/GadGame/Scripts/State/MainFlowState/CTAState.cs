@@ -1,8 +1,10 @@
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GadGame.Manager;
 using GadGame.Network;
+using UnityEngine;
 
 namespace GadGame.State.MainFlowState
 {
@@ -10,6 +12,8 @@ namespace GadGame.State.MainFlowState
     {
 
         private bool _scanSuccess;
+
+        private float _leaveTimer;
 
         public override async void Enter()
         {
@@ -22,27 +26,43 @@ namespace GadGame.State.MainFlowState
             }
 
             QRShow.Instance.OnScanSuccess += OnScanSuccess;
+
+            _leaveTimer = 0;
         }
 
-        public async override void Update(float time)
+        public override void Update(float time)
         {
             if(_scanSuccess) return;
+            if (!UdpSocket.Instance.DataReceived.Engage)
+            {
+                _leaveTimer += Time.deltaTime;
+                if ( _leaveTimer >= 10)
+                {
+                    Runner.SetState<IdleState>();
+                }
+            } else {
+                _leaveTimer = 0;
+            }
             if (time >= 60)
             {
                 Runner.SetState<IdleState>();
-                await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.IdleScene.ScenePath);
             }
         }
 
         public override void Exit()
         {
             QRShow.Instance.OnScanSuccess -= OnScanSuccess;
+            LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.PassByScene.ScenePath);
         }
 
         private async void OnScanSuccess() {
             _scanSuccess = true;
             await UniTask.Delay(TimeSpan.FromSeconds(10));
-            await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.IdleScene.ScenePath);
+            Runner.SetState<IdleState>();
+        }
+
+        private void LeaveComplete()
+        {
             Runner.SetState<IdleState>();
         }
     }

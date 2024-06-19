@@ -14,18 +14,18 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/GadGame/Scenes/PassBy.unity
     guid: c9e32be920223db4eb26536f66c3d91a
-  - enabled: 1
+  - enabled: 0
     path: Assets/GadGame/Scenes/Viewer.unity
     guid: f55162ea91535d84290df33ce2b3c2fb
-  - enabled: 1
+  - enabled: 0
     path: Assets/GadGame/Scenes/Engage.unity
     guid: cdaaa0ee6b3b73b4b9f984ca2bf1d535
   - enabled: 1
-    path: Assets/GadGame/Scenes/Game.unity
+    path: Assets/GadGame/Scenes/GameMale.unity
     guid: 79d05a23a33b9504c8ae8344c73927fe
   - enabled: 1
     path: Assets/GadGame/Scenes/CTA-female.unity
-    guid: 48bbe95e3cc2b504492831147cd12207
+    guid: 4ecb64fb1fa29a71fa49c5a3bc530eb7
   - enabled: 1
     path: Assets/GadGame/Scenes/CTA-male.unity
     guid: 8d29c734954a82da488afe07def90528
@@ -34,8 +34,20 @@ EditorBuildSettings:
     guid: 5881f8613541949ffbbc6a2d193f3704
   - enabled: 1
     path: Assets/GadGame/Scenes/CTA-female.unity
-    guid: 48bbe95e3cc2b504492831147cd12207
-  - enabled: 1
+    guid: 4ecb64fb1fa29a71fa49c5a3bc530eb7
+  - enabled: 0
     path: Assets/GadGame/Scenes/T-male.unity
     guid: a703ee5d23b7084b8abda00394078d18
+  - enabled: 1
+    path: Assets/GadGame/Scenes/GameFemale.unity
+    guid: c1c082e6ade6e488fa6c819f69603daa
+  - enabled: 1
+    path: Assets/GadGame/Scenes/CTA-female.unity
+    guid: 4ecb64fb1fa29a71fa49c5a3bc530eb7
+  - enabled: 0
+    path: Assets/GadGame/Scenes/CTA-female1.unity
+    guid: 1f68131d5efe445e49e204c7e6c5cb30
+  - enabled: 1
+    path: Assets/GadGame/Scenes/CTA-female.unity
+    guid: 4ecb64fb1fa29a71fa49c5a3bc530eb7
   m_configObjects: {}

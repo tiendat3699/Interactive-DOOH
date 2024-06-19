@@ -18,7 +18,7 @@ MonoBehaviour:
   - name: LoginAsGameMachine
     type: 1
     query: "mutation LoginAsGameMachine{\n    loginAsGameMachine(  input :{ macAddress
-      :\"D85ED3741515\", password :\"Abc@123\"} ){\n        accessToken\n       
+      :\"D8BBC1004EF5\", password :\"Abc@123\"} ){\n        accessToken\n       
       refreshToken\n    }\n}"
     queryString: loginAsGameMachine
     returnType: Game

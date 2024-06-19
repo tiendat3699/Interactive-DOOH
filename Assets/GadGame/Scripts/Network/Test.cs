@@ -24,7 +24,7 @@ public class Test : MonoBehaviour
 
     async void Start()
     {
-       await P4PGraphqlManager.Instance.LoginMachine();
+       await P4PGraphqlManager.Instance.LoginMachine("");
        await P4PGraphqlManager.Instance.CreateGuest();
        await P4PGraphqlManager.Instance.JoinPromotion();
        await UniTask.Delay(1000);
