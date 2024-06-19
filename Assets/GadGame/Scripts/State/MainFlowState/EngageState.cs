@@ -14,7 +14,7 @@ namespace GadGame.State.MainFlowState
         public override void Enter()
         {
             // LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.EndGageScene.ScenePath);
-            PassByAnimation.Instance.Play(true);
+            Runner.PlayPassByAnim.Raise(true);
             _readyTimer = 5;
         }
 
@@ -31,7 +31,7 @@ namespace GadGame.State.MainFlowState
             }
 
             if (!UdpSocket.Instance.DataReceived.Ready) _readyTimer = 3;
-            PassByAnimation.Instance.ReadyCountDown(_readyTimer / 3);
+            Runner.ReadyCountDown.Raise(_readyTimer / 3);
             _readyTimer -= Time.deltaTime;
             if (_readyTimer <= 0)
             {

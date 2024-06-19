@@ -7,10 +7,10 @@ namespace GadGame.State.MainFlowState
 {
     public class PassByState : State<MainFlow>
     {
-        public async override void Enter()
+        public override void Enter()
         {
             // await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.PassByScene.ScenePath);
-            PassByAnimation.Instance.Play(false);
+            Runner.PlayPassByAnim.Raise(false);
         }
         
         public override void Update(float time)

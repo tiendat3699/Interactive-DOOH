@@ -1,6 +1,7 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using GadGame.Event.Type;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,14 +14,14 @@ namespace GadGame
         [SerializeField] private Image _fillImage;
         [SerializeField] private Transform _content;
         [SerializeField] private CanvasGroup _canvasGroup;
+        [SerializeField] private FloatEvent ReadyCountDown;
 
         private float _readyTime;
-        private MainFlow _mainFlow;
+        
         private void Start()
         {
-            _mainFlow = MainFlow.Instance;
-            _mainFlow.OnReadyCountDown += OnReadyCountdown;
-            _mainFlow.OnReady += OnReady;
+            ReadyCountDown.Register(OnReadyCountdown);
+            // _mainFlow.OnReady += OnReady;
             _content.localScale = Vector3.zero;
         }
 
@@ -28,8 +29,8 @@ namespace GadGame
         {
             _canvasGroup.DOKill();
             _content.DOKill();
-            _mainFlow.OnReadyCountDown -= OnReadyCountdown;
-            _mainFlow.OnReady -= OnReady;
+            ReadyCountDown.Unregister(OnReadyCountdown);
+            // _mainFlow.OnReady -= OnReady;
         }
 
         private async void OnReady(bool ready)

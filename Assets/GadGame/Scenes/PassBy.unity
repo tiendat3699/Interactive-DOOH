@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657826, g: 0.49641263, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &168448063
 RectTransform:
   m_ObjectHideFlags: 0
@@ -190,6 +190,7 @@ MonoBehaviour:
   _fillImage: {fileID: 1759146273}
   _content: {fileID: 1878343082}
   _canvasGroup: {fileID: 168448064}
+  ReadyCountDown: {fileID: 0}
 --- !u!1 &278260374
 GameObject:
   m_ObjectHideFlags: 0
@@ -1256,11 +1257,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb912582d92576517a29da7e3cd308a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  passBy: {fileID: 324847415}
+  _passBy: {fileID: 324847415}
   _transform: {fileID: 324847414}
   CircleImg: {fileID: 588222147}
   txtProgress: {fileID: 278260376}
   videoPlayer: {fileID: 2124753956}
+  _playPassByAnimEvent: {fileID: 11400000, guid: c10db4b46d64e594f9e687589c31d078, type: 2}
+  _playVideoEvent: {fileID: 11400000, guid: dbea2d8aaa429f8469057e02ddae849d, type: 2}
+  _readyCountDownEvent: {fileID: 11400000, guid: f5790229e89bafe4c8515b2ad0a54844, type: 2}
 --- !u!1 &1118910917
 GameObject:
   m_ObjectHideFlags: 0

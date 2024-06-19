@@ -1,6 +1,4 @@
 using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GadGame.Manager;
 using GadGame.Network;
@@ -12,7 +10,6 @@ namespace GadGame.State.MainFlowState
     {
 
         private bool _scanSuccess;
-
         private float _leaveTimer;
 
         public override async void Enter()
@@ -24,8 +21,8 @@ namespace GadGame.State.MainFlowState
             {
                 await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(Runner.SceneFlowConfig.CTASceneFemale.ScenePath);
             }
-
-            QRShow.Instance.OnScanSuccess += OnScanSuccess;
+    
+            Runner.ScanSuccess.Register(OnScanSuccess);
 
             _leaveTimer = 0;
         }
@@ -51,7 +48,7 @@ namespace GadGame.State.MainFlowState
 
         public override void Exit()
         {
-            QRShow.Instance.OnScanSuccess -= OnScanSuccess;
+            Runner.ScanSuccess.Unregister(OnScanSuccess);
             LoadSceneManager.Instance.LoadSceneWithTransition(Runner.SceneFlowConfig.PassByScene.ScenePath);
         }
 

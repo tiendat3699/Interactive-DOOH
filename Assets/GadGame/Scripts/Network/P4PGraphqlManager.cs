@@ -2,6 +2,7 @@ using System;
 using System.Net.WebSockets;
 using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
+using GadGame.Event.Customs;
 using GadGame.Singleton;
 using GraphQlClient.Core;
 using GraphQlClient.EventCallbacks;
@@ -27,13 +28,12 @@ namespace GadGame.Network
         [SerializeField] private GraphApi _graphApi;
         // [SerializeField] private string _machineMac;
         [SerializeField] private string _promotionId;
+        [SerializeField] private GuestEvent _guestUpdatedSubscription;
 
         private DateTime _startTime;
         private string _userId;
         private string _userAccessToken;
         private string _machineAccessToken;
-
-        public Action<Guest> OnGuestUpdatedSubscription;
 
         private void OnEnable()
         {
@@ -50,7 +50,7 @@ namespace GadGame.Network
             var Jobj = JObject.Parse(dataReceived.data);
             Debug.Log(Jobj);
             var data = Jobj["payload"]!["data"]!["guestUpdatedSubscription"]!.ToObject<Guest>();
-            OnGuestUpdatedSubscription?.Invoke(data);
+            _guestUpdatedSubscription.Raise(data);
         }
 
         private DataReceive GetData(string data)
@@ -191,7 +191,7 @@ namespace GadGame.Network
             return null;
         }
         
-        private Color32 [] Encode(string textForEncoding, int width, int height)
+        private Color32 [] Encode(string textForEncoding, int width, int height)    
         {
             BarcodeWriter writer = new BarcodeWriter
             {

@@ -8,8 +8,8 @@ namespace GadGame.State.MainFlowState
         public override async void Enter()
         {
             await UniTask.Delay(1000);
-            PassByAnimation.Instance.Play(false);
-            PassByAnimation.Instance.SetPlayVideo(true);
+            Runner.PlayPassByAnim.Raise(false);
+            Runner.PlayVideo.Raise(true);
         }
         
         public override void Update(float time)
@@ -31,7 +31,7 @@ namespace GadGame.State.MainFlowState
 
         public override void Exit()
         {
-            PassByAnimation.Instance.SetPlayVideo(false);
+            Runner.PlayVideo.Raise(false);
         }
     }
 }

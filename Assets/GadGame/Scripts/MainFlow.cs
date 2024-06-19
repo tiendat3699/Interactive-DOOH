@@ -1,20 +1,21 @@
-using System;
 using GadGame.Manager;
 using GadGame.SO;
 using GadGame.State;
 using GadGame.State.MainFlowState;
-using Sirenix.OdinInspector;
 using GadGame.Network;
 using UnityEngine;
-using System.Net.NetworkInformation; 
+using System.Net.NetworkInformation;
+using GadGame.Event.Type;
 
 namespace GadGame
 {
-    public class MainFlow : SingletonStateRunner<MainFlow>
+    public class MainFlow : StateRunner<MainFlow>
     {
         public SceneFlowConfig SceneFlowConfig;
-        public event Action<float> OnReadyCountDown; 
-        public event Action<bool> OnReady;
+        public VoidEvent ScanSuccess;
+        public BoolEvent PlayPassByAnim;
+        public BoolEvent PlayVideo;
+        public FloatEvent ReadyCountDown;
 
         protected override async void Awake()
         {
@@ -30,17 +31,7 @@ namespace GadGame
             await LoadSceneManager.Instance.LoadSceneWithTransitionAsync(SceneFlowConfig.PassByScene.ScenePath);
             SetState<IdleState>();
         }
-
-        public void ReadyCountDown(float duration)
-        {
-            OnReadyCountDown?.Invoke(duration);
-        }
-
-        public void Ready(bool ready)
-        {
-            OnReady?.Invoke(ready);
-        }
-
+        
         private string GetMacAddressString()
         {
             NetworkInterface[] networkInterfaces = NetworkInterface.GetAllNetworkInterfaces();

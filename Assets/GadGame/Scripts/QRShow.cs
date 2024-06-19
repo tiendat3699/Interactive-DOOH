@@ -1,17 +1,12 @@
 using System;
-using Cysharp.Threading.Tasks;
+using GadGame.Event.Customs;
+using GadGame.Event.Type;
 using GadGame.Network;
-using GadGame.Singleton;
-using GraphQlClient.EventCallbacks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
-using DG.Tweening;
-using GadGame.Manager;
-using GadGame.State.MainFlowState;
 
-public class QRShow : Singleton<QRShow>
+public class QRShow : MonoBehaviour
 {
     [SerializeField] private RawImage _rawImage;
     [SerializeField] private TextMeshProUGUI _textShow;
@@ -20,14 +15,9 @@ public class QRShow : Singleton<QRShow>
     [SerializeField] private Animator _notifyAnimator;
     [SerializeField] private Animator _warningAnimator;
     [SerializeField] private Timer _timer;
-    public UnityEvent ShowNotifyEvent;
-
-    public Action OnScanSuccess;
-
-    void Update()
-    {
-        P4PGraphqlManager.Instance.OnGuestUpdatedSubscription += ShowInfo;
-    }
+    [SerializeField] private VoidEvent _scanSuccess;
+    [SerializeField] private GuestEvent _guestUpdatedSubscription;
+    
 
     async void Start()
     {
@@ -35,14 +25,25 @@ public class QRShow : Singleton<QRShow>
         _timer.SetDuration(60).Begin();
     }
 
+    private void OnEnable()
+    {
+        _guestUpdatedSubscription.Register(ShowInfo);
+    }
+
+    private void OnDisable()
+    {
+        _guestUpdatedSubscription.Unregister(ShowInfo);
+    }
+
     private void ShowInfo(Guest guest) {
         string showText = guest.email != null ? "Voucher has been sent to your email: " + ConvertEmail(guest.email) + ". Please check your email to receive voucher" : "Voucher has been sent to your phone number: " + FormatPhoneNumber(guest.phone) + ". Please check your SMS to receive voucher";
         _textShow.text = showText;
-        ShowNotifyEvent.Invoke();
-        OnScanSuccess?.Invoke();
+        _scanSuccess.Raise();
+        PlayAnimation();
+        WarningTimerAnimation();
     }
 
-    public void PlayAnimation()
+    private void PlayAnimation()
     {
         Debug.Log("PlayAnimation");
         _voucherAnimator.SetBool("FadeOut", true);
@@ -51,7 +52,7 @@ public class QRShow : Singleton<QRShow>
         _notifyAnimator.SetBool("Male", UdpSocket.Instance.DataReceived.Gender < 0.5 ? true : false);
     }
 
-    public void WarningTimerAnimation()
+    private void WarningTimerAnimation()
     {
         Debug.Log("Warning");
         _warningAnimator.SetBool("Warning", true);
